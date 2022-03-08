@@ -1,0 +1,46 @@
+{
+  "schemaVersion": 1,
+  "id": "ridehud",
+  "version": "${version}",
+
+  "name": "Ride Hud",
+  "description": "Displays advanced information about ridden animals.",
+  "authors": [
+    "TreSet"
+  ],
+  "contact": {
+    "homepage": "https://github.com/Tre5et/ridehud/releases",
+    "sources": "https://github.com/Tre5et/ridehud",
+    "issues": "https://github.com/Tre5et/ridehud/issues"
+  },
+
+  "license": "GPL-3.0",
+  "icon": "assets/ridehud/icon.png",
+
+  "environment": "*",
+  "entrypoints": {
+    "main": [
+      "net.treset.ridehud.RideHudMod"
+    ],
+    "client": [
+      "net.treset.ridehud.RideHudClient"
+    ],
+    "modmenu": [
+      "net.treset.ridehud.modmenu.ModMenuCompat"
+    ]
+  },
+  "mixins": [
+    "ridehud.mixins.json"
+  ],
+
+  "depends": {
+    "fabricloader": ">=0.13.3",
+    "fabric": "*",
+    "malilib": "*",
+    "minecraft": "1.18.x",
+    "java": ">=17"
+  },
+  "suggests": {
+    "modmenu": "*"
+  }
+}

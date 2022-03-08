@@ -1,0 +1,21 @@
+{
+  "modmenu.descriptionTranslation.ridehud": "Shows advanced information about ridables.",
+
+  "key.ridehud.config_gui" : "Open Settings",
+  "category.ridehud": "Ride Hud",
+
+  "config.ridehud.gui.title": "Ride Hud Settings",
+  "config.ridehud.general": "General",
+
+  "config.ridehud.general.display_mode": "Display Mode",
+  "config.ridehud.general.display_mode.comment": "The way of displaying statistics.",
+  "config.ridehud.general.display_mode.full": "Full",
+  "config.ridehud.general.display_mode.deop": "De-OP-ified",
+  "config.ridehud.general.display_text": "Display Text",
+  "config.ridehud.general.display_text.comment": "If stats should also be displayed in text form.",
+  "config.ridehud.general.bar_offset": "Bar Offset",
+  "config.ridehud.general.bar_offset.comment": "Offsets of the speed and health bars in the vertical direction.",
+
+  "ridehud.unit.blocks": "b",
+  "ridehud.unit.blocks_per_second": "b/s"
+}
