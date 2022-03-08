@@ -1,6 +1,6 @@
 # RideHud by TreSet
 
-![Display of defaukt HUD settings](https://github.com/Tre5et/audio-hotkeys/blob/1.18/banner.png)
+![Display of defaukt HUD settings](https://github.com/Tre5et/ridehud/blob/1.18/banner.png)
 
 ## Description
 
