@@ -14,7 +14,7 @@ This mod requires [Fabric API](https://www.curseforge.com/minecraft/mc-mods/fabr
 
 Put the .jar file from [releases](https://github.com/Tre5et/ridehud/releases) into your Minecraft Mod folder.
 
-## List of features (v1.0)
+## List of features (v1.1)
 
 - vanilla styled display of stats of horses, donkeys, mules and llamas
 - transparent display of unavailable hearts
