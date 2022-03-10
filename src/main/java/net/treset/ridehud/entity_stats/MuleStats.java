@@ -1,5 +1,6 @@
 package net.treset.ridehud.entity_stats;
 
+import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.passive.MuleEntity;
 
 public class MuleStats extends VehicleStats {
@@ -18,7 +19,7 @@ public class MuleStats extends VehicleStats {
 
         this.speedMin = 4.86;
         this.speedMax = 14.57;
-        this.speedModifier = mule.getMovementSpeed();
+        this.speedModifier = mule.getAttributeValue(EntityAttributes.GENERIC_MOVEMENT_SPEED);
         this.speed = this.speedModifier * 43.17;
         this.speedScore = (int)((this.speed - this.speedMin) / (this.speedMax - this.speedMin) * 100);
 
@@ -35,11 +36,5 @@ public class MuleStats extends VehicleStats {
 
     public void updateCurrentHealth() {
         this.healthCurrent = (int)this.mule.getHealth();
-    }
-
-    public void updateSpeed() {
-        this.speedModifier = this.mule.getMovementSpeed();
-        this.speed = this.speedModifier * 43.17;
-        this.speedScore = (int)((this.speed - this.speedMin) / (this.speedMax - this.speedMin) * 100);
     }
 }

@@ -1,10 +1,10 @@
 # RideHud by TreSet
 
-![Display of default HUD settings](https://github.com/Tre5et/ridehud/blob/1.18/banner.png)
+![Display of default HUD settings](https://github.com/Tre5et/ridehud/blob/1.18/banner.png?raw=true "Display of default HUD settings")
 
 ## Description
 
-This client only mod shows information about health, speed and jump height when riding horses, donkeys or mules.
+This client only mod shows information about health, speed and jump height when riding horses, donkeys or mules and health when riding llamas.
 
 The settings page opens by pressing H by defaut and can be accesed via [Mod Menu](https://www.curseforge.com/minecraft/mc-mods/modmenu).
 
@@ -16,7 +16,7 @@ Put the .jar file from [releases](https://github.com/Tre5et/ridehud/releases) in
 
 ## List of features (v1.0)
 
-- vanilla styled display of stats of horses, donkeys and mules
+- vanilla styled display of stats of horses, donkeys, mules and llamas
 - transparent display of unavailable hearts
 - bar displaying jump height relative to the highest and lowest jump height a horse can have
 - bar displaying max speed relative to the highest and lowest max speed a horse can have

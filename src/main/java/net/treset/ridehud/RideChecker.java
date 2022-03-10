@@ -5,10 +5,12 @@ import net.minecraft.client.network.ClientPlayerEntity;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.passive.DonkeyEntity;
 import net.minecraft.entity.passive.HorseEntity;
+import net.minecraft.entity.passive.LlamaEntity;
 import net.minecraft.entity.passive.MuleEntity;
 import net.treset.ridehud.hud.VehicleHudRenderer;
 import net.treset.ridehud.hud.vehicle_huds.DonkeyHud;
 import net.treset.ridehud.hud.vehicle_huds.HorseHud;
+import net.treset.ridehud.hud.vehicle_huds.LlamaHud;
 import net.treset.ridehud.hud.vehicle_huds.MuleHud;
 
 public class RideChecker {
@@ -50,6 +52,10 @@ public class RideChecker {
                 onApplicableVehicle = true;
                 MuleHud hud = new MuleHud(mule);
                 hud.setActive(true);
+            } else if(vehicle instanceof LlamaEntity llama) {
+                onApplicableVehicle = true;
+                LlamaHud hud = new LlamaHud(llama);
+                hud.setActive(true);
 
             } else {
                 onApplicableVehicle = false;
@@ -62,11 +68,6 @@ public class RideChecker {
         if(VehicleHudRenderer.hud == null) return;
 
         if(requestUpdate) updateCurrentOptStats();
-
-        if(VehicleHudRenderer.hud.stats.speedScore < 0) {
-            VehicleHudRenderer.speedAccurate = false;
-            VehicleHudRenderer.updateSpeed();
-        } else if(!VehicleHudRenderer.speedAccurate) VehicleHudRenderer.speedAccurate = true;
     }
 
     public static void updateCurrentOptStats() {

@@ -15,10 +15,7 @@ import net.treset.ridehud.RideHudClient;
 import net.treset.ridehud.RideHudMod;
 import net.treset.ridehud.config.Config;
 import net.treset.ridehud.config.lists.DisplayMode;
-import net.treset.ridehud.hud.vehicle_huds.DonkeyHud;
-import net.treset.ridehud.hud.vehicle_huds.HorseHud;
-import net.treset.ridehud.hud.vehicle_huds.MuleHud;
-import net.treset.ridehud.hud.vehicle_huds.VehicleHud;
+import net.treset.ridehud.hud.vehicle_huds.*;
 
 public class VehicleHudRenderer {
     public static VehicleHud hud = null;
@@ -29,8 +26,6 @@ public class VehicleHudRenderer {
     public static DisplayMode prevDisplayMode = displayMode;
     public static boolean prevDisplayTexts = displayTexts;
     public static int prevBarOffset = barOffset;
-
-    public static boolean speedAccurate = false;
 
     private static MinecraftClient cli;
 
@@ -129,11 +124,6 @@ public class VehicleHudRenderer {
             if(textRenderer == null) return;
 
             String str = assembleText(hud.stats.speed, hud.stats.speedMax , I18n.translate("ridehud.unit.blocks_per_second"), hud.stats.speedScore);
-            if(!speedAccurate) {
-                str = "??/" +
-                        ((roundToDecimalPlace((float)hud.stats.speedMax) % 1 == 0) ? String.format("%.0f", (float)hud.stats.speedMax) : roundToDecimalPlace((float)hud.stats.speedMax)) +
-                        I18n.translate("ridehud.unit.blocks_per_second") + ": ??%";
-            }
             int textWidth = textRenderer.getWidth(str);
             int[] textPos = getBottomCentereCoord(91 - textWidth, 64 + barOffset);
             DrawableHelper.drawTextWithShadow(matrices, textRenderer, Text.of(str), textPos[0], textPos[1], 0xffffff);
@@ -201,16 +191,8 @@ public class VehicleHudRenderer {
             ((DonkeyHud)hud).donkeyStats.updateCurrentHealth();
         } else if(hud instanceof MuleHud) {
             ((MuleHud)hud).muleStats.updateCurrentHealth();
-        }
-    }
-
-    public static void updateSpeed() {
-        if(hud instanceof HorseHud) {
-            ((HorseHud)hud).horseStats.updateSpeed();
-        } else if(hud instanceof DonkeyHud) {
-            ((DonkeyHud)hud).donkeyStats.updateSpeed();
-        } else if(hud instanceof MuleHud) {
-            ((MuleHud)hud).muleStats.updateSpeed();
+        } else if(hud instanceof LlamaHud) {
+            ((LlamaHud)hud).llamaStats.updateCurrentHealth();
         }
     }
 
