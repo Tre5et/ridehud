@@ -11,23 +11,18 @@ import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 import net.treset.ridehud.RideChecker;
-import net.treset.ridehud.RideHudClient;
 import net.treset.ridehud.RideHudMod;
-import net.treset.ridehud.config.Config;
-import net.treset.ridehud.config.lists.DisplayMode;
 import net.treset.ridehud.hud.vehicle_huds.*;
 
 public class VehicleHudRenderer {
     public static VehicleHud hud = null;
 
-    public static DisplayMode displayMode = DisplayMode.FULL;
+    public static int displayMode = 0;
     public static boolean displayTexts = false;
     public static int barOffset = 0;
-    public static DisplayMode prevDisplayMode = displayMode;
+    public static int prevDisplayMode = displayMode;
     public static boolean prevDisplayTexts = displayTexts;
     public static int prevBarOffset = barOffset;
-
-    private static MinecraftClient cli;
 
     private static final Identifier SPRITESHEET = new Identifier(RideHudMod.MOD_ID, "textures/hud/spritesheet.png");
     private static final int[] texSize = new int[]{91, 38};
@@ -55,6 +50,8 @@ public class VehicleHudRenderer {
         if(hud.hasJump) {
             drawJumpbar(matrices);
         }
+
+        requestUpdates();
     }
 
     public static void drawHearts(MatrixStack matrices) {
@@ -66,7 +63,7 @@ public class VehicleHudRenderer {
         RenderSystem.defaultBlendFunc();
 
         for(int i = hud.stats.healthHearts - (int)(hud.stats.healthMin / 2); i < HEART_POSITIONS.length; i++) {
-            int[] pos = getBottomCentereCoord(HEART_POSITIONS[i][0], HEART_POSITIONS[i][1]);
+            int[] pos = getBottomCenterCoord(HEART_POSITIONS[i][0], HEART_POSITIONS[i][1]);
 
             int heartOverlapFix = 1;
             if(i == 3) heartOverlapFix = 0;
@@ -95,19 +92,19 @@ public class VehicleHudRenderer {
 
             String str = assembleText(hud.stats.health, hud.stats.healthMax, "", hud.stats.healthScore);
             int textWidth = textRenderer.getWidth(str);
-            int[] textPos = getBottomCentereCoord(50 - textWidth, 49);
+            int[] textPos = getBottomCenterCoord(50 - textWidth, 49);
             DrawableHelper.drawTextWithShadow(matrices, textRenderer, Text.of(str), textPos[0], textPos[1], 0xffffff);
         }
     }
 
     public static void drawSpeedbar(MatrixStack matrices) {
         RenderSystem.setShaderTexture(0, SPRITESHEET);
-        int[] pos = getBottomCentereCoord(0, 55 + barOffset);
+        int[] pos = getBottomCenterCoord(0, 55 + barOffset);
 
         DrawableHelper.drawTexture(matrices, pos[0], pos[1], TextureCoordinate.SPEED_BAR_EMPTY.area.u, TextureCoordinate.SPEED_BAR_EMPTY.area.v, TextureCoordinate.SPEED_BAR_EMPTY.area.xSize, TextureCoordinate.SPEED_BAR_EMPTY.area.ySize, texSize[0], texSize[1]);
 
         int overlayWidth = 0;
-        if(displayMode == DisplayMode.DEOP) {
+        if(displayMode == 1) {
             overlayWidth = Math.round((float)TextureCoordinate.SPEED_BAR_FULL.area.xSize * (float)(hud.stats.speedCurrent - hud.stats.speedMin) / (float)(hud.stats.speedMax - hud.stats.speedMin));
         } else {
             overlayWidth = Math.round((float)TextureCoordinate.SPEED_BAR_FULL.area.xSize * (float)hud.stats.speedScore / 100);
@@ -115,7 +112,7 @@ public class VehicleHudRenderer {
         DrawableHelper.drawTexture(matrices, pos[0], pos[1], TextureCoordinate.SPEED_BAR_FULL.area.u, TextureCoordinate.SPEED_BAR_FULL.area.v, overlayWidth, TextureCoordinate.SPEED_BAR_FULL.area.ySize, texSize[0], texSize[1]);
 
         //render icon
-        int[] icoPos = getBottomCentereCoord(91, 64 + barOffset);
+        int[] icoPos = getBottomCenterCoord(91, 64 + barOffset);
         DrawableHelper.drawTexture(matrices, icoPos[0], icoPos[1], TextureCoordinate.SPEED_BAR_ICON.area.u, TextureCoordinate.SPEED_BAR_ICON.area.v, TextureCoordinate.SPEED_BAR_ICON.area.xSize, TextureCoordinate.SPEED_BAR_ICON.area.ySize, texSize[0], texSize[1]);
 
         //render text
@@ -125,19 +122,19 @@ public class VehicleHudRenderer {
 
             String str = assembleText(hud.stats.speed, hud.stats.speedMax , I18n.translate("ridehud.unit.blocks_per_second"), hud.stats.speedScore);
             int textWidth = textRenderer.getWidth(str);
-            int[] textPos = getBottomCentereCoord(91 - textWidth, 64 + barOffset);
+            int[] textPos = getBottomCenterCoord(91 - textWidth, 64 + barOffset);
             DrawableHelper.drawTextWithShadow(matrices, textRenderer, Text.of(str), textPos[0], textPos[1], 0xffffff);
         }
     }
 
     public static void drawJumpbar(MatrixStack matrices) {
         RenderSystem.setShaderTexture(0, SPRITESHEET);
-        int[] pos = getBottomCentereCoord(-91, 55 + barOffset);
+        int[] pos = getBottomCenterCoord(-91, 55 + barOffset);
 
         DrawableHelper.drawTexture(matrices, pos[0], pos[1], TextureCoordinate.JUMP_BAR_EMPTY.area.u, TextureCoordinate.JUMP_BAR_EMPTY.area.v, TextureCoordinate.JUMP_BAR_EMPTY.area.xSize, TextureCoordinate.JUMP_BAR_EMPTY.area.ySize, texSize[0], texSize[1]);
 
         int overlayWidth = 0;
-        if(displayMode == DisplayMode.DEOP) {
+        if(displayMode == 1) {
             overlayWidth = Math.round((float)TextureCoordinate.JUMP_BAR_FULL.area.xSize * (float)(hud.stats.jumpCurrent - hud.stats.jumpHeightMin) / (float)(hud.stats.jumpHeightMax - hud.stats.jumpHeightMin));
         } else {
             overlayWidth = Math.round((float)TextureCoordinate.JUMP_BAR_FULL.area.xSize * (float)hud.stats.jumpScore / 100);
@@ -145,7 +142,7 @@ public class VehicleHudRenderer {
         DrawableHelper.drawTexture(matrices, pos[0], pos[1], TextureCoordinate.JUMP_BAR_FULL.area.u, TextureCoordinate.JUMP_BAR_FULL.area.v, overlayWidth, TextureCoordinate.JUMP_BAR_FULL.area.ySize, texSize[0], texSize[1]);
 
         //render icon
-        int[] icoPos = getBottomCentereCoord(-109, 64 + barOffset);
+        int[] icoPos = getBottomCenterCoord(-109, 64 + barOffset);
         DrawableHelper.drawTexture(matrices, icoPos[0], icoPos[1], TextureCoordinate.JUMP_BAR_ICON.area.u, TextureCoordinate.JUMP_BAR_ICON.area.v, TextureCoordinate.JUMP_BAR_ICON.area.xSize, TextureCoordinate.JUMP_BAR_ICON.area.ySize, texSize[0], texSize[1]);
 
         //render text
@@ -154,12 +151,16 @@ public class VehicleHudRenderer {
             if(textRenderer == null) return;
 
             String str = assembleText(hud.stats.jumpHeight, hud.stats.jumpHeightMax, I18n.translate("ridehud.unit.blocks"), hud.stats.jumpScore);
-            int[] textPos = getBottomCentereCoord(-91, 64 + barOffset);
+            int[] textPos = getBottomCenterCoord(-91, 64 + barOffset);
             DrawableHelper.drawTextWithShadow(matrices, textRenderer, Text.of(str), textPos[0], textPos[1], 0xffffff);
         }
     }
 
-    public static int[] getBottomCentereCoord(int x, int y) {
+    public static void requestUpdates() {
+        if(displayMode == 1 != RideChecker.getUpdateReq()) RideChecker.requestUpdate = displayMode == 1;
+    }
+
+    public static int[] getBottomCenterCoord(int x, int y) {
         MinecraftClient cli = MinecraftClient.getInstance();
         if(cli == null) return new int[]{0,0};
         int windowWidth = cli.getWindow().getScaledWidth();
@@ -196,32 +197,11 @@ public class VehicleHudRenderer {
         }
     }
 
-    public static void checkDisplayChange(boolean force) {
-        if(cli == null) {
-            cli = MinecraftClient.getInstance();
-            return;
-        }
-
-        if(cli.currentScreen == RideHudClient.configScreen || force) {
-            if(Config.General.DISPLAY_TEXT.getBooleanValue() != prevDisplayTexts) {
-                setDisplayTexts(Config.General.DISPLAY_TEXT.getBooleanValue());
-                prevDisplayTexts = Config.General.DISPLAY_TEXT.getBooleanValue();
-            }
-            if(displayMode != prevDisplayMode) {
-                prevDisplayMode = displayMode;
-                RideChecker.requestUpdate = displayMode == DisplayMode.DEOP;
-            }
-            if(Config.General.BAR_OFFSET.getIntegerValue() != prevBarOffset) {
-                barOffset = prevBarOffset = Config.General.BAR_OFFSET.getIntegerValue();
-            }
-        }
-    }
-
     public static void setDisplayTexts(boolean active) {
         displayTexts = active;
     }
-
-    public static void setDisplayMode(DisplayMode mode) {
-        displayMode = mode;
+    public static void setDisplayMode(int index) {
+        displayMode = index;
     }
+    public static void setBarOffset(int offset) { barOffset = offset; }
 }

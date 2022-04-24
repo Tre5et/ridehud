@@ -1,6 +1,8 @@
 {
   "modmenu.descriptionTranslation.ridehud": "Shows advanced information about ridables.",
 
+  "ridehud" : "Ride Hud",
+
   "key.ridehud.config_gui" : "Open Settings",
   "category.ridehud": "Ride Hud",
 

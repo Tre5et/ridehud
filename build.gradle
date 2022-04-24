@@ -13,10 +13,9 @@ group = project.maven_group
 repositories {
 	mavenCentral()
 
+
 	maven { url 'https://maven.terraformersmc.com/releases/' }
-	maven {
-		url 'https://masa.dy.fi/maven'
-	}
+	maven { url 'https://raw.githubusercontent.com/Tre5et/maven/main/' }
 
 	// Add repositories to retrieve artifacts from in here.
 	// You should only use this when depending on other mods because
@@ -36,7 +35,7 @@ dependencies {
 
 	modImplementation "com.terraformersmc:modmenu:${project.mod_menu_version}"
 
-	modImplementation "fi.dy.masa.malilib:malilib-fabric-${project.minecraft_version_out}:${project.malilib_version}"
+	modImplementation "net.treset:vanillaconfig:${project.vanillaconfig_version}"
 }
 
 processResources {

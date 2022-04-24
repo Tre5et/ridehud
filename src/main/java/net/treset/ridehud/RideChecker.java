@@ -12,6 +12,7 @@ import net.treset.ridehud.hud.vehicle_huds.DonkeyHud;
 import net.treset.ridehud.hud.vehicle_huds.HorseHud;
 import net.treset.ridehud.hud.vehicle_huds.LlamaHud;
 import net.treset.ridehud.hud.vehicle_huds.MuleHud;
+import net.treset.vanillaconfig.tools.ClientTools;
 
 public class RideChecker {
     private static Entity prevVehicle = null;
@@ -23,7 +24,7 @@ public class RideChecker {
 
     public static void checkRideStatus() {
 
-        if(cli == null) {
+        if(cli == null && !ClientTools.isInGame()) {
             cli = MinecraftClient.getInstance();
             return;
         }
@@ -63,8 +64,6 @@ public class RideChecker {
             }
         }
 
-        VehicleHudRenderer.checkDisplayChange(false);
-
         if(VehicleHudRenderer.hud == null) return;
 
         if(requestUpdate) updateCurrentOptStats();
@@ -74,4 +73,6 @@ public class RideChecker {
         VehicleHudRenderer.hud.stats.updateCurrentSpeed();
         VehicleHudRenderer.hud.stats.updateCurrentJumpHeight();
     }
+
+    public static boolean getUpdateReq() { return requestUpdate; }
 }
