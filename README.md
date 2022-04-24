@@ -10,11 +10,11 @@ The settings page opens by pressing H by defaut and can be accesed via [Mod Menu
 
 ## Setup
 
-This mod requires [Fabric API](https://www.curseforge.com/minecraft/mc-mods/fabric-api) and [MaLiLib](https://www.curseforge.com/minecraft/mc-mods/malilib)!
+This mod requires [Fabric API](https://www.curseforge.com/minecraft/mc-mods/fabric-api) and [VanillaConfig](https://www.curseforge.com/minecraft/mc-mods/vanillaconfig) (since 1.2.0)!
 
 Put the .jar file from [releases](https://github.com/Tre5et/ridehud/releases) into your Minecraft Mod folder.
 
-## List of features (v1.1)
+## List of features (v1.2)
 
 - vanilla styled display of stats of horses, donkeys, mules and llamas
 - transparent display of unavailable hearts
