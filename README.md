@@ -24,6 +24,7 @@ Put the .jar file from [releases](https://github.com/Tre5et/ridehud/releases) in
 - optional display of stats in text-form
 - optional "de-OP-ified" display mode, which shows the current jump height / speed on the bars instead of maximum values
 - full translatability (only German available atm 'cause I'm German)
+- movable bars for compatibility with mods like [Better Horse Hud](https://www.curseforge.com/minecraft/mc-mods/better-horse-hud).
 
 ## License
 
