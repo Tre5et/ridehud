@@ -19,13 +19,15 @@ public class Config {
     private static final String[] displayOpt = new String[] {"config.ridehud.general.display_mode.full", "config.ridehud.general.display_mode.deop"};
     public static final ListConfig displayMode = new ListConfig(displayOpt, 0, "config.ridehud.general.display_mode", "config.ridehud.general.display_mode.comment");
     public static final BooleanConfig displayText = new BooleanConfig(false, "config.ridehud.general.display_text", "config.ridehud.general.display_text.comment");
-    public static final IntegerConfig barOffset = new IntegerConfig(0, -1000, 1000, "config.ridehud.general.bar_offset", "config.ridehud.general.bar_offset.comment");
+    public static final IntegerConfig barOffset = new IntegerConfig(0, -1000, 10000, "config.ridehud.general.bar_offset", "config.ridehud.general.bar_offset.comment");
+    public static final IntegerConfig heartOffset = new IntegerConfig(0, -1000, 10000, "config.ridehud.general.heart_offset", "config.ridehud.general.heart_offset.comment");
     public static final KeybindConfig openGui = new KeybindConfig(new int[]{35}, 0, 5, "key.ridehud.config_gui");
 
     public static void init() {
         mainPage.addOption(displayMode);
         mainPage.addOption(displayText);
         mainPage.addOption(barOffset);
+        mainPage.addOption(heartOffset);
         mainPage.addOption(openGui);
 
         mainPage.loadVersion();
@@ -41,6 +43,7 @@ public class Config {
         displayMode.onChange(Config::onDisplayModeChanged);
         displayText.onChange(Config::onDisplayTextChanged);
         barOffset.onChange(Config::onBarOffsetChanged);
+        heartOffset.onChange(Config::onHeartOffsetChanged);
         openGui.onPressed(Config::onConfigHotkeyPressed);
     }
 
@@ -52,6 +55,9 @@ public class Config {
     }
     public static void onBarOffsetChanged(int prevOffset, String key) {
         VehicleHudRenderer.setBarOffset(barOffset.getInteger());
+    }
+    public static void onHeartOffsetChanged(int prevOffset, String key) {
+        VehicleHudRenderer.setHeartOffset(heartOffset.getInteger());
     }
     public static void onConfigHotkeyPressed(String key) {
         MinecraftClient.getInstance().setScreen(RideHudClient.configScreen);

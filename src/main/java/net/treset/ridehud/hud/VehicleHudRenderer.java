@@ -20,6 +20,7 @@ public class VehicleHudRenderer {
     public static int displayMode = 0;
     public static boolean displayTexts = false;
     public static int barOffset = 0;
+    public static int heartOffset = 0;
     public static int prevDisplayMode = displayMode;
     public static boolean prevDisplayTexts = displayTexts;
     public static int prevBarOffset = barOffset;
@@ -63,7 +64,7 @@ public class VehicleHudRenderer {
         RenderSystem.defaultBlendFunc();
 
         for(int i = hud.stats.healthHearts - (int)(hud.stats.healthMin / 2); i < HEART_POSITIONS.length; i++) {
-            int[] pos = getBottomCenterCoord(HEART_POSITIONS[i][0], HEART_POSITIONS[i][1]);
+            int[] pos = getBottomCenterCoord(HEART_POSITIONS[i][0], HEART_POSITIONS[i][1] + heartOffset);
 
             int heartOverlapFix = 1;
             if(i == 3) heartOverlapFix = 0;
@@ -92,7 +93,7 @@ public class VehicleHudRenderer {
 
             String str = assembleText(hud.stats.health, hud.stats.healthMax, "", hud.stats.healthScore);
             int textWidth = textRenderer.getWidth(str);
-            int[] textPos = getBottomCenterCoord(50 - textWidth, 49);
+            int[] textPos = getBottomCenterCoord(50 - textWidth, 49 + heartOffset);
             DrawableHelper.drawTextWithShadow(matrices, textRenderer, Text.of(str), textPos[0], textPos[1], 0xffffff);
         }
     }
@@ -204,4 +205,5 @@ public class VehicleHudRenderer {
         displayMode = index;
     }
     public static void setBarOffset(int offset) { barOffset = offset; }
+    public static void setHeartOffset(int offset) { heartOffset = offset; }
 }

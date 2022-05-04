@@ -16,7 +16,9 @@
   "config.ridehud.general.display_text": "Display Text",
   "config.ridehud.general.display_text.comment": "If stats should also be displayed in text form.",
   "config.ridehud.general.bar_offset": "Bar Offset",
-  "config.ridehud.general.bar_offset.comment": "Offsets of the speed and health bars in the vertical direction.",
+  "config.ridehud.general.bar_offset.comment": "Offsets of the speed and jump bars in the vertical direction.",
+  "config.ridehud.general.heart_offset": "Heart Offset",
+  "config.ridehud.general.heart_offset.comment": "Offsets of the additional hearts in the vertical direction.",
 
   "ridehud.unit.blocks": "b",
   "ridehud.unit.blocks_per_second": "b/s"
