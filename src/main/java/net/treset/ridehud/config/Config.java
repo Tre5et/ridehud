@@ -4,7 +4,6 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonPrimitive;
 import net.minecraft.client.MinecraftClient;
 import net.treset.ridehud.RideHudClient;
-import net.treset.ridehud.RideHudMod;
 import net.treset.ridehud.hud.VehicleHudRenderer;
 import net.treset.ridehud.tools.FileTools;
 import net.treset.vanillaconfig.config.*;
@@ -14,14 +13,14 @@ import net.treset.vanillaconfig.screen.ConfigScreen;
 
 public class Config {
 
-    public static final PageConfig mainPage = new PageConfig(RideHudMod.MOD_ID);
+    public static final PageConfig mainPage = new PageConfig("config.ridehud");
 
-    private static final String[] displayOpt = new String[] {"config.ridehud.general.display_mode.full", "config.ridehud.general.display_mode.deop"};
-    public static final ListConfig displayMode = new ListConfig(displayOpt, 0, "config.ridehud.general.display_mode", "config.ridehud.general.display_mode.comment");
-    public static final BooleanConfig displayText = new BooleanConfig(false, "config.ridehud.general.display_text", "config.ridehud.general.display_text.comment");
-    public static final IntegerConfig barOffset = new IntegerConfig(0, -1000, 10000, "config.ridehud.general.bar_offset", "config.ridehud.general.bar_offset.comment");
-    public static final IntegerConfig heartOffset = new IntegerConfig(0, -1000, 10000, "config.ridehud.general.heart_offset", "config.ridehud.general.heart_offset.comment");
-    public static final KeybindConfig openGui = new KeybindConfig(new int[]{35}, 0, 5, "key.ridehud.config_gui");
+    private static final String[] displayOpt = new String[] {"config.ridehud.display_mode.full", "config.ridehud.display_mode.deop"};
+    public static final ListConfig displayMode = new ListConfig(displayOpt, 0, "config.ridehud.display_mode", "config.ridehud.display_mode.comment");
+    public static final BooleanConfig displayText = new BooleanConfig(false, "config.ridehud.display_text", "config.ridehud.display_text.comment");
+    public static final IntegerConfig barOffset = new IntegerConfig(0, -1000, 10000, "config.ridehud.bar_offset", "config.ridehud.bar_offset.comment");
+    public static final IntegerConfig heartOffset = new IntegerConfig(0, -1000, 10000, "config.ridehud.heart_offset", "config.ridehud.heart_offset.comment");
+    public static final KeybindConfig openGui = new KeybindConfig(new int[]{35}, 0, 5, "config.ridehud.open_gui");
 
     public static void init() {
         mainPage.addOption(displayMode);
@@ -35,10 +34,16 @@ public class Config {
 
         mainPage.setVersion(new ConfigVersion(1, 0,0));
 
+        mainPage.setSaveName("ridhud");
         mainPage.setPath("ridehud");
         SaveLoadManager.globalSaveConfig(mainPage);
 
         RideHudClient.configScreen = new ConfigScreen(mainPage, MinecraftClient.getInstance().currentScreen);
+
+        displayMode.setFullWidth(false);
+        displayText.setFullWidth(false);
+        barOffset.setFullWidth(false);
+        heartOffset.setFullWidth(false);
 
         displayMode.onChange(Config::onDisplayModeChanged);
         displayText.onChange(Config::onDisplayTextChanged);

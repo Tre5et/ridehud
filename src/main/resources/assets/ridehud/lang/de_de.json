@@ -1,22 +1,18 @@
 {
   "modmenu.descriptionTranslation.ridehud": "Zeigt erweiterte Informationen über gerittene Tiere.",
 
-  "key.ridehud.config_gui" : "Einstellungen öffnen",
-  "category.ridehud": "Ride Hud",
-
-  "config.ridehud.gui.title": "Ride Hud Einstellungen",
-  "config.ridehud.general": "Generelles",
-
-  "config.ridehud.general.display_mode": "Anzeigemodus",
-  "config.ridehud.general.display_mode.comment": "Wie die Statistiken angezeigt werden.",
-  "config.ridehud.general.display_mode.full": "Vollständig",
-  "config.ridehud.general.display_mode.deop": "De-Op-fiziert",
-  "config.ridehud.general.display_text": "Textanzeige",
-  "config.ridehud.general.display_text.comment": "Ob die Statistiken zusätzlich in Textform angezeigt werden sollen.",
-  "config.ridehud.general.bar_offset": "Leistenverschiebung",
-  "config.ridehud.general.bar_offset.comment": "Verschiebt die Geschwindigkeits- und Sprunghöhenanzeige in vertikaler Richtung.",
-  "config.ridehud.general.heart_offset": "Herzverschiebung",
-  "config.ridehud.general.heart_offset.comment": "Verschiebt die zusätzlichen Herzen in vertikaler Richtung.",
+  "config.ridehud" : "Ride Hud Einstellungen",
+  "config.ridehud.display_mode": "Anzeigemodus",
+  "config.ridehud.display_mode.comment": "Wie die Statistiken angezeigt werden.",
+  "config.ridehud.display_mode.full": "Vollständig",
+  "config.ridehud.display_mode.deop": "De-Op-fiziert",
+  "config.ridehud.display_text": "Text anzeigen",
+  "config.ridehud.display_text.comment": "Ob die Statistiken zusätzlich in Textform angezeigt werden sollen.",
+  "config.ridehud.bar_offset": "Leistenverschiebung",
+  "config.ridehud.bar_offset.comment": "Verschiebt die Geschwindigkeits- und Sprunghöhenanzeige in vertikaler Richtung.",
+  "config.ridehud.heart_offset": "Herzverschiebung",
+  "config.ridehud.heart_offset.comment": "Verschiebt die zusätzlichen Herzen in vertikaler Richtung.",
+  "config.ridehud.open_gui" : "Einstllungen Öffnen",
 
   "ridehud.unit.blocks": "b",
   "ridehud.unit.blocks_per_second": "b/s"
