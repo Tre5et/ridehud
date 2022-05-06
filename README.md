@@ -6,7 +6,7 @@
 
 This client only mod shows information about health, speed and jump height when riding horses, donkeys or mules and health when riding llamas.
 
-The settings page opens by pressing H by default (_**if you have upgraded to v1.2.0 or higher, your open hotkey was reset to this!**_) and can be accesed via [Mod Menu](https://www.curseforge.com/minecraft/mc-mods/modmenu).
+The settings page opens by pressing H by default and can be accesed via [Mod Menu](https://www.curseforge.com/minecraft/mc-mods/modmenu).
 
 ## Setup
 
