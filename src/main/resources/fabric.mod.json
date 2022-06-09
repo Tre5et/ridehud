@@ -34,10 +34,10 @@
   ],
 
   "depends": {
-    "fabricloader": ">=0.12.0",
+    "fabricloader": ">=0.14.7",
     "fabric": "*",
-    "vanillaconfig": ">=1.1.1",
-    "minecraft": "1.18.x",
+    "vanillaconfig": ">=1.2.1",
+    "minecraft": "1.19.x",
     "java": ">=17"
   },
   "suggests": {
