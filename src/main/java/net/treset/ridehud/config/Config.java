@@ -6,11 +6,11 @@ import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.util.InputUtil;
 import net.treset.ridehud.RideHudClient;
 import net.treset.ridehud.hud.VehicleHudRenderer;
-import net.treset.ridehud.tools.FileTools;
 import net.treset.vanillaconfig.config.*;
 import net.treset.vanillaconfig.config.managers.SaveLoadManager;
 import net.treset.vanillaconfig.config.version.ConfigVersion;
 import net.treset.vanillaconfig.screen.ConfigScreen;
+import net.treset.vanillaconfig.tools.FileTools;
 import org.lwjgl.glfw.GLFW;
 
 import java.io.BufferedReader;
@@ -84,7 +84,7 @@ public class Config {
     private static void migrateFromMalilib() {
         mainPage.migrateFileFrom("ridehud/ridehud.json");
 
-        if(!net.treset.vanillaconfig.tools.FileTools.fileExists(mainPage.getFile(true))) return;
+        if(!FileTools.fileExists(mainPage.getFile(true))) return;
 
         JsonElement oldConfig = FileTools.readJsonFile(mainPage.getFile(true));
         if(oldConfig != null && oldConfig.isJsonObject()) {
