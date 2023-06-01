@@ -17,6 +17,10 @@ repositories {
 	maven { url 'https://maven.terraformersmc.com/releases/' }
 	maven { url 'https://raw.githubusercontent.com/Tre5et/maven/main/' }
 
+	flatDir {
+		dirs 'run/mods'
+	}
+
 	// Add repositories to retrieve artifacts from in here.
 	// You should only use this when depending on other mods because
 	// Loom adds the essential maven repositories to download Minecraft and libraries from automatically.

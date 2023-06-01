@@ -1,6 +1,7 @@
 package net.treset.ridehud.mixin;
 
 import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.hud.InGameHud;
 import net.minecraft.client.util.math.MatrixStack;
 import net.treset.ridehud.hud.VehicleHudRenderer;
@@ -14,12 +15,12 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 public class InGameHudMixin {
 
     @Inject(method = "render", at = @At("HEAD"), cancellable = true)
-    public void onRender(MatrixStack matrices, float tickDelta, CallbackInfo info) {
+    public void onRender(DrawContext ctx, float tickDelta, CallbackInfo info) {
 
-        VehicleHudRenderer.render(matrices);
+        VehicleHudRenderer.render(ctx);
     }
 
-    @ModifyVariable(method = "renderHeldItemTooltip(Lnet/minecraft/client/util/math/MatrixStack;)V", at = @At(value = "STORE"), ordinal = 2)
+    @ModifyVariable(method = "renderHeldItemTooltip(Lnet/minecraft/client/gui/DrawContext;)V", at = @At(value = "STORE"), ordinal = 2)
     private int injectedInt(int k) {
         int value = k;
         if(VehicleHudRenderer.hud != null) {
