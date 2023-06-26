@@ -1,0 +1,19 @@
+{
+  "modmenu.descriptionTranslation.ridehud": "显示可骑乘动物的高级信息。",
+
+  "config.ridehud" : "Ride Hud 设置",
+  "config.ridehud.display_mode": "显示模式",
+  "config.ridehud.display_mode.comment": "显示信息的模式。",
+  "config.ridehud.display_mode.full": "完整状态",
+  "config.ridehud.display_mode.deop": "实时状态",
+  "config.ridehud.display_text": "显示文字信息",
+  "config.ridehud.display_text.comment": "统计信息是否同时以文字形式进行显示。",
+  "config.ridehud.bar_offset": "进度条偏移量",
+  "config.ridehud.bar_offset.comment": "速度条和跳跃条在垂直方向上的偏移量。",
+  "config.ridehud.heart_offset": "血量偏移量",
+  "config.ridehud.heart_offset.comment": "血量在垂直方向上的偏移量。",
+  "config.ridehud.open_gui" : "打开设置按键绑定",
+
+  "ridehud.unit.blocks": "b",
+  "ridehud.unit.blocks_per_second": "b/s"
+}
