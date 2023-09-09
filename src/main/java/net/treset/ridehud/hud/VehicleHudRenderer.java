@@ -13,18 +13,22 @@ import net.treset.ridehud.RideHudMod;
 import net.treset.ridehud.hud.vehicle_huds.*;
 
 public class VehicleHudRenderer {
+    public static Identifier HEART_VEHICLE_UNAVAILABLE = new Identifier(RideHudMod.MOD_ID, "textures/gui/sprites/hud/heart/vehicle_unavailable.png");
+    public static Identifier HEART_VEHICLE_UNAVAILABLE_HALF = new Identifier(RideHudMod.MOD_ID, "textures/gui/sprites/hud/heart/vehicle_unavailable_half.png");
+    public static Identifier HEART_VEHICLE_UNAVAILABLE_HALF_FULL = new Identifier(RideHudMod.MOD_ID, "textures/gui/sprites/hud/heart/vehicle_unavailable_half_full.png");
+    public static Identifier JUMP_ABILITY_BAR_BACKGROUND = new Identifier(RideHudMod.MOD_ID, "textures/gui/sprites/hud/jump_ability_bar_background.png");
+    public static Identifier JUMP_ABILITY_BAR_PROGRESS = new Identifier(RideHudMod.MOD_ID, "textures/gui/sprites/hud/jump_ability_bar_progress.png");
+    public static Identifier JUMP_ABILITY_ICON = new Identifier(RideHudMod.MOD_ID, "textures/gui/sprites/hud/jump_ability_icon.png");
+    public static Identifier SPEED_ABILITY_BAR_BACKGROUND = new Identifier(RideHudMod.MOD_ID, "textures/gui/sprites/hud/speed_ability_bar_background.png");
+    public static Identifier SPEED_ABILITY_BAR_PROGRESS = new Identifier(RideHudMod.MOD_ID, "textures/gui/sprites/hud/speed_ability_bar_progress.png");
+    public static Identifier SPEED_ABILITY_ICON = new Identifier(RideHudMod.MOD_ID, "textures/gui/sprites/hud/speed_ability_icon.png");
+
     public static VehicleHud hud = null;
 
     public static int displayMode = 0;
     public static boolean displayTexts = false;
     public static int barOffset = 0;
     public static int heartOffset = 0;
-    public static int prevDisplayMode = displayMode;
-    public static boolean prevDisplayTexts = displayTexts;
-    public static int prevBarOffset = barOffset;
-
-    private static final Identifier SPRITESHEET = new Identifier(RideHudMod.MOD_ID, "textures/hud/spritesheet.png");
-    private static final int[] texSize = new int[]{91, 38};
 
     private static final int[][] HEART_POSITIONS = new int[][] {
             new int[] {26, 39},
@@ -60,7 +64,7 @@ public class VehicleHudRenderer {
         RenderSystem.enableBlend();
         RenderSystem.defaultBlendFunc();
 
-        for(int i = hud.stats.healthHearts - (int)(hud.stats.healthMin / 2); i < HEART_POSITIONS.length; i++) {
+        for(int i = hud.stats.healthHearts - hud.stats.healthMin / 2; i < HEART_POSITIONS.length; i++) {
             int[] pos = getBottomCenterCoord(HEART_POSITIONS[i][0], HEART_POSITIONS[i][1] + heartOffset);
 
             int heartOverlapFix = 1;
@@ -70,21 +74,21 @@ public class VehicleHudRenderer {
             if (hud.stats.health % 2 != 0 && i == hud.stats.healthHearts - (hud.stats.healthMin / 2)) {
                 updateCurrentHealth();
                 if (hud.stats.healthCurrent == hud.stats.health) {
-                    ctx.drawTexture(SPRITESHEET, pos[0], pos[1], TextureCoordinate.HEART_FULL.area.u, TextureCoordinate.HEART_FULL.area.v, TextureCoordinate.HEART_FULL.area.xSize - heartOverlapFix, TextureCoordinate.HEART_FULL.area.ySize, texSize[0], texSize[1]);
+                    ctx.drawTexture(HEART_VEHICLE_UNAVAILABLE_HALF_FULL, pos[0], pos[1], 0, 0, 9 - heartOverlapFix, 9, 9, 9);
                 } else {
-                    ctx.drawTexture(SPRITESHEET, pos[0], pos[1], TextureCoordinate.HEART_EMPTY.area.u, TextureCoordinate.HEART_EMPTY.area.v, TextureCoordinate.HEART_EMPTY.area.xSize - heartOverlapFix, TextureCoordinate.HEART_EMPTY.area.ySize, texSize[0], texSize[1]);
+                    ctx.drawTexture(HEART_VEHICLE_UNAVAILABLE_HALF, pos[0], pos[1], 0, 0, 9 - heartOverlapFix, 9, 9, 9);
                 }
 
-                //render unavailable hearts
             } else {
-                ctx.drawTexture(SPRITESHEET, pos[0], pos[1], TextureCoordinate.HEART_UNAVAILABLE.area.u, TextureCoordinate.HEART_UNAVAILABLE.area.v, TextureCoordinate.HEART_UNAVAILABLE.area.xSize - heartOverlapFix, TextureCoordinate.HEART_UNAVAILABLE.area.ySize, texSize[0], texSize[1]);
+                //render unavailable hearts
+                ctx.drawTexture(HEART_VEHICLE_UNAVAILABLE, pos[0], pos[1], 0, 0, 9 - heartOverlapFix, 9, 9, 9);
             }
         }
 
         RenderSystem.disableBlend();
 
-        //render text
         if(displayTexts) {
+            //render text
             TextRenderer textRenderer = MinecraftClient.getInstance().textRenderer;
             if(textRenderer == null) return;
 
@@ -98,19 +102,19 @@ public class VehicleHudRenderer {
     public static void drawSpeedbar(DrawContext ctx) {
         int[] pos = getBottomCenterCoord(0, 55 + barOffset);
 
-        ctx.drawTexture(SPRITESHEET, pos[0], pos[1], TextureCoordinate.SPEED_BAR_EMPTY.area.u, TextureCoordinate.SPEED_BAR_EMPTY.area.v, TextureCoordinate.SPEED_BAR_EMPTY.area.xSize, TextureCoordinate.SPEED_BAR_EMPTY.area.ySize, texSize[0], texSize[1]);
+        ctx.drawTexture(SPEED_ABILITY_BAR_BACKGROUND, pos[0], pos[1], 0, 0, 91, 5, 91, 5);
 
-        int overlayWidth = 0;
+        int overlayWidth;
         if(displayMode == 1) {
-            overlayWidth = Math.round((float)TextureCoordinate.SPEED_BAR_FULL.area.xSize * (float)(hud.stats.speedCurrent - hud.stats.speedMin) / (float)(hud.stats.speedMax - hud.stats.speedMin));
+            overlayWidth = Math.round(91f * (float)(hud.stats.speedCurrent - hud.stats.speedMin) / (float)(hud.stats.speedMax - hud.stats.speedMin));
         } else {
-            overlayWidth = Math.round((float)TextureCoordinate.SPEED_BAR_FULL.area.xSize * (float)hud.stats.speedScore / 100);
+            overlayWidth = Math.round(91f * hud.stats.speedScore / 100f);
         }
-        ctx.drawTexture(SPRITESHEET, pos[0], pos[1], TextureCoordinate.SPEED_BAR_FULL.area.u, TextureCoordinate.SPEED_BAR_FULL.area.v, overlayWidth, TextureCoordinate.SPEED_BAR_FULL.area.ySize, texSize[0], texSize[1]);
+        ctx.drawTexture(SPEED_ABILITY_BAR_PROGRESS, pos[0], pos[1], 0, 0, overlayWidth, 5, 91, 5);
 
         //render icon
         int[] icoPos = getBottomCenterCoord(91, 64 + barOffset);
-        ctx.drawTexture(SPRITESHEET, icoPos[0], icoPos[1], TextureCoordinate.SPEED_BAR_ICON.area.u, TextureCoordinate.SPEED_BAR_ICON.area.v, TextureCoordinate.SPEED_BAR_ICON.area.xSize, TextureCoordinate.SPEED_BAR_ICON.area.ySize, texSize[0], texSize[1]);
+        ctx.drawTexture(SPEED_ABILITY_ICON, icoPos[0], icoPos[1], 0, 0, 18, 18, 18, 18);
 
         //render text
         if(displayTexts) {
@@ -127,19 +131,19 @@ public class VehicleHudRenderer {
     public static void drawJumpbar(DrawContext ctx) {
         int[] pos = getBottomCenterCoord(-91, 55 + barOffset);
 
-        ctx.drawTexture(SPRITESHEET, pos[0], pos[1], TextureCoordinate.JUMP_BAR_EMPTY.area.u, TextureCoordinate.JUMP_BAR_EMPTY.area.v, TextureCoordinate.JUMP_BAR_EMPTY.area.xSize, TextureCoordinate.JUMP_BAR_EMPTY.area.ySize, texSize[0], texSize[1]);
+        ctx.drawTexture(JUMP_ABILITY_BAR_BACKGROUND, pos[0], pos[1], 0, 0, 91, 5, 91, 5);
 
-        int overlayWidth = 0;
+        int overlayWidth;
         if(displayMode == 1) {
-            overlayWidth = Math.round((float)TextureCoordinate.JUMP_BAR_FULL.area.xSize * (float)(hud.stats.jumpCurrent - hud.stats.jumpHeightMin) / (float)(hud.stats.jumpHeightMax - hud.stats.jumpHeightMin));
+            overlayWidth = Math.round(91f * (float)(hud.stats.jumpCurrent - hud.stats.jumpHeightMin) / (float)(hud.stats.jumpHeightMax - hud.stats.jumpHeightMin));
         } else {
-            overlayWidth = Math.round((float)TextureCoordinate.JUMP_BAR_FULL.area.xSize * (float)hud.stats.jumpScore / 100);
+            overlayWidth = Math.round(91f * hud.stats.jumpScore / 100f);
         }
-        ctx.drawTexture(SPRITESHEET, pos[0], pos[1], TextureCoordinate.JUMP_BAR_FULL.area.u, TextureCoordinate.JUMP_BAR_FULL.area.v, overlayWidth, TextureCoordinate.JUMP_BAR_FULL.area.ySize, texSize[0], texSize[1]);
+        ctx.drawTexture(JUMP_ABILITY_BAR_PROGRESS, pos[0], pos[1], 0, 0, overlayWidth, 5, 91, 5);
 
         //render icon
         int[] icoPos = getBottomCenterCoord(-109, 64 + barOffset);
-        ctx.drawTexture(SPRITESHEET, icoPos[0], icoPos[1], TextureCoordinate.JUMP_BAR_ICON.area.u, TextureCoordinate.JUMP_BAR_ICON.area.v, TextureCoordinate.JUMP_BAR_ICON.area.xSize, TextureCoordinate.JUMP_BAR_ICON.area.ySize, texSize[0], texSize[1]);
+        ctx.drawTexture(JUMP_ABILITY_ICON, icoPos[0], icoPos[1], 0, 0, 18, 18, 18, 18);
 
         //render text
         if(displayTexts) {
@@ -170,11 +174,10 @@ public class VehicleHudRenderer {
 
     public static String assembleText(double value, double max, String unit, int score) {
 
-        String newText = String.format("%s/%s%s: %s%s",
+        return String.format("%s/%s%s: %s%s",
                 (roundToDecimalPlace((float)value) % 1 == 0) ? String.format("%.0f", value) : roundToDecimalPlace((float)value),
                 (roundToDecimalPlace((float)max) % 1 == 0) ? String.format("%.0f", max) : roundToDecimalPlace((float)max),
                 unit, score, "%");
-        return newText;
     }
 
     public static float roundToDecimalPlace(float value) {
