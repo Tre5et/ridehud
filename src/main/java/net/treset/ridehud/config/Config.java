@@ -23,8 +23,8 @@ public class Config {
 
     public static final PageConfig mainPage = new PageConfig("config.ridehud");
 
-    private static final String[] displayOpt = new String[] {"config.ridehud.display_mode.full", "config.ridehud.display_mode.deop"};
-    public static final ListConfig displayMode = new ListConfig(displayOpt, 0, "config.ridehud.display_mode", "config.ridehud.display_mode.comment");
+    private static final String[] displayOpt = new String[] {"config.ridehud.display_mode.max", "config.ridehud.display_mode.current"};
+    public static final ListConfig displayMode = new ListConfig(displayOpt, 0, "config.ridehud.display_mode", new String[][]{new String[]{"config.ridehud.display_mode.comment.0", "config.ridehud.display_mode.comment.1", "config.ridehud.display_mode.comment.2"}});
     public static final BooleanConfig displayText = new BooleanConfig(false, "config.ridehud.display_text", "config.ridehud.display_text.comment");
     public static final IntegerConfig barOffset = new IntegerConfig(0, -1000, 10000, "config.ridehud.bar_offset", "config.ridehud.bar_offset.comment");
     public static final IntegerConfig heartOffset = new IntegerConfig(0, -1000, 10000, "config.ridehud.heart_offset", "config.ridehud.heart_offset.comment");

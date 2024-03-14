@@ -3,9 +3,9 @@
 
   "config.ridehud" : "Ride Hud 设置",
   "config.ridehud.display_mode": "显示模式",
-  "config.ridehud.display_mode.comment": "显示信息的模式。",
-  "config.ridehud.display_mode.full": "完整状态",
-  "config.ridehud.display_mode.deop": "实时状态",
+  "config.ridehud.display_mode.comment.0": "显示信息的模式。",
+  "config.ridehud.display_mode.max": "完整状态",
+  "config.ridehud.display_mode.current": "实时状态",
   "config.ridehud.display_text": "显示文字信息",
   "config.ridehud.display_text.comment": "统计信息是否同时以文字形式进行显示。",
   "config.ridehud.bar_offset": "进度条偏移量",
