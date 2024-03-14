@@ -14,8 +14,8 @@ import net.treset.ridehud.hud.vehicle_huds.*;
 
 public class VehicleHudRenderer {
     public static Identifier HEART_VEHICLE_UNAVAILABLE = new Identifier(RideHudMod.MOD_ID, "textures/gui/sprites/hud/heart/vehicle_unavailable.png");
-    public static Identifier HEART_VEHICLE_UNAVAILABLE_HALF = new Identifier(RideHudMod.MOD_ID, "textures/gui/sprites/hud/heart/vehicle_unavailable_half.png");
-    public static Identifier HEART_VEHICLE_UNAVAILABLE_HALF_FULL = new Identifier(RideHudMod.MOD_ID, "textures/gui/sprites/hud/heart/vehicle_unavailable_half_full.png");
+    public static Identifier HEART_CONTAINER = new Identifier("textures/gui/sprites/hud/heart/container.png");
+    public static Identifier HEART_VEHICLE_FULL = new Identifier("textures/gui/sprites/hud/heart/vehicle_full.png");
     public static Identifier JUMP_ABILITY_BAR_BACKGROUND = new Identifier(RideHudMod.MOD_ID, "textures/gui/sprites/hud/jump_ability_bar_background.png");
     public static Identifier JUMP_ABILITY_BAR_PROGRESS = new Identifier(RideHudMod.MOD_ID, "textures/gui/sprites/hud/jump_ability_bar_progress.png");
     public static Identifier JUMP_ABILITY_ICON = new Identifier(RideHudMod.MOD_ID, "textures/gui/sprites/hud/jump_ability_icon.png");
@@ -73,10 +73,10 @@ public class VehicleHudRenderer {
             //render half hearts
             if (hud.stats.health % 2 != 0 && i == hud.stats.healthHearts - (hud.stats.healthMin / 2)) {
                 updateCurrentHealth();
+                ctx.drawTexture(HEART_VEHICLE_UNAVAILABLE, pos[0], pos[1], 0, 0, 4, 9, 9, 9);
+                ctx.drawTexture(HEART_CONTAINER, pos[0] + 4, pos[1], 4, 0, 5 - heartOverlapFix, 9, 9, 9);
                 if (hud.stats.healthCurrent == hud.stats.health) {
-                    ctx.drawTexture(HEART_VEHICLE_UNAVAILABLE_HALF_FULL, pos[0], pos[1], 0, 0, 9 - heartOverlapFix, 9, 9, 9);
-                } else {
-                    ctx.drawTexture(HEART_VEHICLE_UNAVAILABLE_HALF, pos[0], pos[1], 0, 0, 9 - heartOverlapFix, 9, 9, 9);
+                    ctx.drawTexture(HEART_VEHICLE_FULL, pos[0] + 4, pos[1], 4, 0, 5 - heartOverlapFix, 9, 9, 9);
                 }
 
             } else {
