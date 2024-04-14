@@ -4,7 +4,7 @@ import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.passive.MuleEntity;
 
 public class MuleStats extends VehicleStats {
-    public MuleEntity mule = null;
+    public MuleEntity mule;
     
     public MuleStats(MuleEntity mule) {
         this.uuid = mule.getUuidAsString();
@@ -13,7 +13,7 @@ public class MuleStats extends VehicleStats {
 
         this.jumpHeightMin = 1.089;
         this.jumpHeightMax = 5.293;
-        this.jumpModifier = mule.getJumpStrength();
+        this.jumpModifier = mule.getAttributeValue(EntityAttributes.GENERIC_JUMP_STRENGTH);
         this.jumpHeight = Math.pow(this.jumpModifier, 1.7) * 5.293;
         this.jumpScore = (int)((this.jumpHeight - this.jumpHeightMin) / (this.jumpHeightMax - this.jumpHeightMin) * 100);
 

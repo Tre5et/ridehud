@@ -5,7 +5,7 @@ import net.minecraft.entity.passive.HorseEntity;
 
 public class HorseStats extends VehicleStats {
 
-    public HorseEntity horse = null;
+    public HorseEntity horse;
 
     public HorseStats(HorseEntity horse) {
         this.uuid = horse.getUuidAsString();
@@ -14,7 +14,7 @@ public class HorseStats extends VehicleStats {
 
         this.jumpHeightMin = 1.089;
         this.jumpHeightMax = 5.293;
-        this.jumpModifier = horse.getJumpStrength();
+        this.jumpModifier = horse.getAttributeValue(EntityAttributes.GENERIC_JUMP_STRENGTH);
         this.jumpHeight = Math.pow(this.jumpModifier, 1.7) * 5.293;
         this.jumpScore = (int)((this.jumpHeight - this.jumpHeightMin) / (this.jumpHeightMax - this.jumpHeightMin) * 100);
 

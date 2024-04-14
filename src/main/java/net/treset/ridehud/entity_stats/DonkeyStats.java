@@ -4,7 +4,7 @@ import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.passive.DonkeyEntity;
 
 public class DonkeyStats extends VehicleStats {
-    public DonkeyEntity donkey = null;
+    public DonkeyEntity donkey;
     
     public DonkeyStats(DonkeyEntity donkey) {
         this.uuid = donkey.getUuidAsString();
@@ -13,7 +13,7 @@ public class DonkeyStats extends VehicleStats {
 
         this.jumpHeightMin = 1.089;
         this.jumpHeightMax = 5.293;
-        this.jumpModifier = donkey.getJumpStrength();
+        this.jumpModifier = donkey.getAttributeValue(EntityAttributes.GENERIC_JUMP_STRENGTH);
         this.jumpHeight = Math.pow(this.jumpModifier, 1.7) * 5.293;
         this.jumpScore = (int)((this.jumpHeight - this.jumpHeightMin) / (this.jumpHeightMax - this.jumpHeightMin) * 100);
 
