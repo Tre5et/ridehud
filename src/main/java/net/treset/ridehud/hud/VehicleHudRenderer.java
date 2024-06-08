@@ -13,15 +13,15 @@ import net.treset.ridehud.RideHudMod;
 import net.treset.ridehud.hud.vehicle_huds.*;
 
 public class VehicleHudRenderer {
-    public static Identifier HEART_VEHICLE_UNAVAILABLE = new Identifier(RideHudMod.MOD_ID, "textures/gui/sprites/hud/heart/vehicle_unavailable.png");
-    public static Identifier HEART_CONTAINER = new Identifier("textures/gui/sprites/hud/heart/container.png");
-    public static Identifier HEART_VEHICLE_FULL = new Identifier("textures/gui/sprites/hud/heart/vehicle_full.png");
-    public static Identifier JUMP_ABILITY_BAR_BACKGROUND = new Identifier(RideHudMod.MOD_ID, "textures/gui/sprites/hud/jump_ability_bar_background.png");
-    public static Identifier JUMP_ABILITY_BAR_PROGRESS = new Identifier(RideHudMod.MOD_ID, "textures/gui/sprites/hud/jump_ability_bar_progress.png");
-    public static Identifier JUMP_ABILITY_ICON = new Identifier(RideHudMod.MOD_ID, "textures/gui/sprites/hud/jump_ability_icon.png");
-    public static Identifier SPEED_ABILITY_BAR_BACKGROUND = new Identifier(RideHudMod.MOD_ID, "textures/gui/sprites/hud/speed_ability_bar_background.png");
-    public static Identifier SPEED_ABILITY_BAR_PROGRESS = new Identifier(RideHudMod.MOD_ID, "textures/gui/sprites/hud/speed_ability_bar_progress.png");
-    public static Identifier SPEED_ABILITY_ICON = new Identifier(RideHudMod.MOD_ID, "textures/gui/sprites/hud/speed_ability_icon.png");
+    public static Identifier HEART_CONTAINER = Identifier.ofVanilla("textures/gui/sprites/hud/heart/container.png");
+    public static Identifier HEART_VEHICLE_FULL = Identifier.ofVanilla("textures/gui/sprites/hud/heart/vehicle_full.png");
+    public static Identifier HEART_VEHICLE_UNAVAILABLE = Identifier.of(RideHudMod.MOD_ID, "textures/gui/sprites/hud/heart/vehicle_unavailable.png");
+    public static Identifier JUMP_ABILITY_BAR_BACKGROUND = Identifier.of(RideHudMod.MOD_ID, "textures/gui/sprites/hud/jump_ability_bar_background.png");
+    public static Identifier JUMP_ABILITY_BAR_PROGRESS = Identifier.of(RideHudMod.MOD_ID, "textures/gui/sprites/hud/jump_ability_bar_progress.png");
+    public static Identifier JUMP_ABILITY_ICON = Identifier.of(RideHudMod.MOD_ID, "textures/gui/sprites/hud/jump_ability_icon.png");
+    public static Identifier SPEED_ABILITY_BAR_BACKGROUND = Identifier.of(RideHudMod.MOD_ID, "textures/gui/sprites/hud/speed_ability_bar_background.png");
+    public static Identifier SPEED_ABILITY_BAR_PROGRESS = Identifier.of(RideHudMod.MOD_ID, "textures/gui/sprites/hud/speed_ability_bar_progress.png");
+    public static Identifier SPEED_ABILITY_ICON = Identifier.of(RideHudMod.MOD_ID, "textures/gui/sprites/hud/speed_ability_icon.png");
 
     public static VehicleHud hud = null;
 
