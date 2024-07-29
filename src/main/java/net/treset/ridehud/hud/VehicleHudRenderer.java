@@ -6,6 +6,7 @@ import net.minecraft.client.font.TextRenderer;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.render.GameRenderer;
 import net.minecraft.client.resource.language.I18n;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 import net.treset.ridehud.RideChecker;
@@ -30,6 +31,8 @@ public class VehicleHudRenderer {
     public static int barOffset = 0;
     public static int heartOffset = 0;
 
+    private static int totalHealth = 0;
+
     private static final int[][] HEART_POSITIONS = new int[][] {
             new int[] {26, 39},
             new int[] {18, 39},
@@ -44,6 +47,8 @@ public class VehicleHudRenderer {
     public static void render(DrawContext ctx) {
         if(hud == null) return;
 
+        updateHealth();
+
         if(hud.hasHealth) {
             drawHearts(ctx);
         }
@@ -55,6 +60,12 @@ public class VehicleHudRenderer {
         }
 
         requestUpdates();
+    }
+
+    public static void updateHealth() {
+        PlayerEntity player = MinecraftClient.getInstance().player;
+        if(player == null) return;
+        totalHealth = (int)player.getMaxHealth() + (int)player.getAbsorptionAmount();
     }
 
     public static void drawHearts(DrawContext ctx) {
@@ -100,7 +111,9 @@ public class VehicleHudRenderer {
     }
 
     public static void drawSpeedbar(DrawContext ctx) {
-        int[] pos = getBottomCenterCoord(0, 55 + barOffset);
+        int totalOffset = barOffset + (totalHealth - 1) / 20 * 9;
+
+        int[] pos = getBottomCenterCoord(0, 55 + totalOffset);
 
         ctx.drawTexture(SPEED_ABILITY_BAR_BACKGROUND, pos[0], pos[1], 0, 0, 91, 5, 91, 5);
 
@@ -113,7 +126,7 @@ public class VehicleHudRenderer {
         ctx.drawTexture(SPEED_ABILITY_BAR_PROGRESS, pos[0], pos[1], 0, 0, overlayWidth, 5, 91, 5);
 
         //render icon
-        int[] icoPos = getBottomCenterCoord(91, 64 + barOffset);
+        int[] icoPos = getBottomCenterCoord(91, 64 + totalOffset);
         ctx.drawTexture(SPEED_ABILITY_ICON, icoPos[0], icoPos[1], 0, 0, 18, 18, 18, 18);
 
         //render text
@@ -129,7 +142,9 @@ public class VehicleHudRenderer {
     }
 
     public static void drawJumpbar(DrawContext ctx) {
-        int[] pos = getBottomCenterCoord(-91, 55 + barOffset);
+        int totalOffset = barOffset + (totalHealth - 1) / 20 * 9;
+
+        int[] pos = getBottomCenterCoord(-91, 55 + totalOffset);
 
         ctx.drawTexture(JUMP_ABILITY_BAR_BACKGROUND, pos[0], pos[1], 0, 0, 91, 5, 91, 5);
 
@@ -142,7 +157,7 @@ public class VehicleHudRenderer {
         ctx.drawTexture(JUMP_ABILITY_BAR_PROGRESS, pos[0], pos[1], 0, 0, overlayWidth, 5, 91, 5);
 
         //render icon
-        int[] icoPos = getBottomCenterCoord(-109, 64 + barOffset);
+        int[] icoPos = getBottomCenterCoord(-109, 64 + totalOffset);
         ctx.drawTexture(JUMP_ABILITY_ICON, icoPos[0], icoPos[1], 0, 0, 18, 18, 18, 18);
 
         //render text
