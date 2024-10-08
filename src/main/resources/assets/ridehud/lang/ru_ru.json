@@ -1,0 +1,21 @@
+{
+  "modmenu.descriptionTranslation.ridehud": "Показывает расширенную информацию о животных, на которых можно ездить верхом.",
+
+  "config.ridehud" : "Настройки Ride Hud",
+  "config.ridehud.display_mode": "Вид индикатора",
+  "config.ridehud.display_mode.comment.0": "Как отобразить индикатор скорости и прыжка.",
+  "config.ridehud.display_mode.comment.1": " Максимальная: Показывает максимальную скорость и высоту прыжка.",
+  "config.ridehud.display_mode.comment.2": " Текущий: Показывает текущую скорость и высоту прыжка.",
+  "config.ridehud.display_mode.max": "Макс",
+  "config.ridehud.display_mode.current": "Текущий",
+  "config.ridehud.display_text": "Отображаемый текст",
+  "config.ridehud.display_text.comment": "Если статистика также должна отображаться в текстовом виде.",
+  "config.ridehud.bar_offset": "Смещение индикатора",
+  "config.ridehud.bar_offset.comment": "Смещение индикаторов скорости и прыжка в вертикальном направлении.",
+  "config.ridehud.heart_offset": "Смещение сердец",
+  "config.ridehud.heart_offset.comment": "Смещение дополнительных сердец в вертикальном направлении.",
+  "config.ridehud.open_gui" : "Открыть настройки",
+
+  "ridehud.unit.blocks": "бл",
+  "ridehud.unit.blocks_per_second": "бл/с"
+}
