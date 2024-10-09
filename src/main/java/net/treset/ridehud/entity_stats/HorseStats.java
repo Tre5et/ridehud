@@ -14,13 +14,13 @@ public class HorseStats extends VehicleStats {
 
         this.jumpHeightMin = 1.089;
         this.jumpHeightMax = 5.293;
-        this.jumpModifier = horse.getAttributeValue(EntityAttributes.GENERIC_JUMP_STRENGTH);
+        this.jumpModifier = horse.getAttributeValue(EntityAttributes.JUMP_STRENGTH);
         this.jumpHeight = Math.pow(this.jumpModifier, 1.7) * 5.293;
         this.jumpScore = (int)((this.jumpHeight - this.jumpHeightMin) / (this.jumpHeightMax - this.jumpHeightMin) * 100);
 
         this.speedMin = 4.86;
         this.speedMax = 14.57;
-        this.speedModifier = horse.getAttributeValue(EntityAttributes.GENERIC_MOVEMENT_SPEED);
+        this.speedModifier = horse.getAttributeValue(EntityAttributes.MOVEMENT_SPEED);
         this.speed = this.speedModifier * 43.17;
         this.speedScore = (int)((this.speed - this.speedMin) / (this.speedMax - this.speedMin) * 100);
 

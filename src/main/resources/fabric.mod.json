@@ -37,7 +37,7 @@
     "fabricloader": ">=0.14.20",
     "fabric": "*",
     "vanillaconfig": ">=1.2.11",
-    "minecraft": ["~1.21.0"],
+    "minecraft": ["~1.21.2"],
     "java": ">=17"
   },
   "suggests": {

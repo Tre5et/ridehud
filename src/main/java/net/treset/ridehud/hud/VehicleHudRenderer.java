@@ -4,7 +4,7 @@ import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.font.TextRenderer;
 import net.minecraft.client.gui.DrawContext;
-import net.minecraft.client.render.GameRenderer;
+import net.minecraft.client.render.RenderLayer;
 import net.minecraft.client.resource.language.I18n;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.text.Text;
@@ -70,7 +70,6 @@ public class VehicleHudRenderer {
 
     public static void drawHearts(DrawContext ctx) {
         RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
-        RenderSystem.setShader(GameRenderer::getPositionProgram);
 
         RenderSystem.enableBlend();
         RenderSystem.defaultBlendFunc();
@@ -84,15 +83,15 @@ public class VehicleHudRenderer {
             //render half hearts
             if (hud.stats.health % 2 != 0 && i == hud.stats.healthHearts - (hud.stats.healthMin / 2)) {
                 updateCurrentHealth();
-                ctx.drawTexture(HEART_VEHICLE_UNAVAILABLE, pos[0], pos[1], 0, 0, 4, 9, 9, 9);
-                ctx.drawTexture(HEART_CONTAINER, pos[0] + 4, pos[1], 4, 0, 5 - heartOverlapFix, 9, 9, 9);
+                ctx.drawTexture(RenderLayer::getGuiTextured, HEART_VEHICLE_UNAVAILABLE, pos[0], pos[1], 0, 0, 4, 9, 9, 9);
+                ctx.drawTexture(RenderLayer::getGuiTextured, HEART_CONTAINER, pos[0] + 4, pos[1], 4, 0, 5 - heartOverlapFix, 9, 9, 9);
                 if (hud.stats.healthCurrent == hud.stats.health) {
-                    ctx.drawTexture(HEART_VEHICLE_FULL, pos[0] + 4, pos[1], 4, 0, 5 - heartOverlapFix, 9, 9, 9);
+                    ctx.drawTexture(RenderLayer::getGuiTextured, HEART_VEHICLE_FULL, pos[0] + 4, pos[1], 4, 0, 5 - heartOverlapFix, 9, 9, 9);
                 }
 
             } else {
                 //render unavailable hearts
-                ctx.drawTexture(HEART_VEHICLE_UNAVAILABLE, pos[0], pos[1], 0, 0, 9 - heartOverlapFix, 9, 9, 9);
+                ctx.drawTexture(RenderLayer::getGuiTextured, HEART_VEHICLE_UNAVAILABLE, pos[0], pos[1], 0, 0, 9 - heartOverlapFix, 9, 9, 9);
             }
         }
 
@@ -115,7 +114,7 @@ public class VehicleHudRenderer {
 
         int[] pos = getBottomCenterCoord(0, 55 + totalOffset);
 
-        ctx.drawTexture(SPEED_ABILITY_BAR_BACKGROUND, pos[0], pos[1], 0, 0, 91, 5, 91, 5);
+        ctx.drawTexture(RenderLayer::getGuiTextured, SPEED_ABILITY_BAR_BACKGROUND, pos[0], pos[1], 0, 0, 91, 5, 91, 5);
 
         int overlayWidth;
         if(displayMode == 1) {
@@ -123,11 +122,11 @@ public class VehicleHudRenderer {
         } else {
             overlayWidth = Math.round(91f * hud.stats.speedScore / 100f);
         }
-        ctx.drawTexture(SPEED_ABILITY_BAR_PROGRESS, pos[0], pos[1], 0, 0, overlayWidth, 5, 91, 5);
+        ctx.drawTexture(RenderLayer::getGuiTextured, SPEED_ABILITY_BAR_PROGRESS, pos[0], pos[1], 0, 0, overlayWidth, 5, 91, 5);
 
         //render icon
         int[] icoPos = getBottomCenterCoord(91, 64 + totalOffset);
-        ctx.drawTexture(SPEED_ABILITY_ICON, icoPos[0], icoPos[1], 0, 0, 18, 18, 18, 18);
+        ctx.drawTexture(RenderLayer::getGuiTextured, SPEED_ABILITY_ICON, icoPos[0], icoPos[1], 0, 0, 18, 18, 18, 18);
 
         //render text
         if(displayTexts) {
@@ -136,7 +135,7 @@ public class VehicleHudRenderer {
 
             String str = assembleText(hud.stats.speed, hud.stats.speedMax , I18n.translate("ridehud.unit.blocks_per_second"), hud.stats.speedScore);
             int textWidth = textRenderer.getWidth(str);
-            int[] textPos = getBottomCenterCoord(91 - textWidth, 64 + barOffset);
+            int[] textPos = getBottomCenterCoord(91 - textWidth, 64 + totalOffset);
             ctx.drawTextWithShadow(textRenderer, Text.of(str), textPos[0], textPos[1], 0xffffff);
         }
     }
@@ -146,7 +145,7 @@ public class VehicleHudRenderer {
 
         int[] pos = getBottomCenterCoord(-91, 55 + totalOffset);
 
-        ctx.drawTexture(JUMP_ABILITY_BAR_BACKGROUND, pos[0], pos[1], 0, 0, 91, 5, 91, 5);
+        ctx.drawTexture(RenderLayer::getGuiTextured, JUMP_ABILITY_BAR_BACKGROUND, pos[0], pos[1], 0, 0, 91, 5, 91, 5);
 
         int overlayWidth;
         if(displayMode == 1) {
@@ -154,11 +153,11 @@ public class VehicleHudRenderer {
         } else {
             overlayWidth = Math.round(91f * hud.stats.jumpScore / 100f);
         }
-        ctx.drawTexture(JUMP_ABILITY_BAR_PROGRESS, pos[0], pos[1], 0, 0, overlayWidth, 5, 91, 5);
+        ctx.drawTexture(RenderLayer::getGuiTextured, JUMP_ABILITY_BAR_PROGRESS, pos[0], pos[1], 0, 0, overlayWidth, 5, 91, 5);
 
         //render icon
         int[] icoPos = getBottomCenterCoord(-109, 64 + totalOffset);
-        ctx.drawTexture(JUMP_ABILITY_ICON, icoPos[0], icoPos[1], 0, 0, 18, 18, 18, 18);
+        ctx.drawTexture(RenderLayer::getGuiTextured, JUMP_ABILITY_ICON, icoPos[0], icoPos[1], 0, 0, 18, 18, 18, 18);
 
         //render text
         if(displayTexts) {
@@ -166,7 +165,7 @@ public class VehicleHudRenderer {
             if(textRenderer == null) return;
 
             String str = assembleText(hud.stats.jumpHeight, hud.stats.jumpHeightMax, I18n.translate("ridehud.unit.blocks"), hud.stats.jumpScore);
-            int[] textPos = getBottomCenterCoord(-91, 64 + barOffset);
+            int[] textPos = getBottomCenterCoord(-91, 64 + totalOffset);
             ctx.drawTextWithShadow(textRenderer, Text.of(str), textPos[0], textPos[1], 0xffffff);
         }
     }
