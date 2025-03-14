@@ -1,9 +1,6 @@
 package net.treset.ridehud.entity_stats;
 
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.passive.HorseEntity;
-import net.treset.ridehud.RideHudMod;
-
 public class VehicleStats {
     public String uuid = null;
     public Entity entity = null;
@@ -39,6 +36,6 @@ public class VehicleStats {
     }
 
     public void updateCurrentSpeed() {
-        speedCurrent = (Math.sqrt(Math.pow(entity.getX() - entity.prevX, 2) + Math.pow(entity.getZ() - entity.prevZ, 2))) * 20D;
+        speedCurrent = (Math.sqrt(Math.pow(entity.getX() - entity.lastX, 2) + Math.pow(entity.getZ() - entity.lastZ, 2))) * 20D;
     }
 }

@@ -71,9 +71,6 @@ public class VehicleHudRenderer {
     public static void drawHearts(DrawContext ctx) {
         RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
 
-        RenderSystem.enableBlend();
-        RenderSystem.defaultBlendFunc();
-
         for(int i = hud.stats.healthHearts - hud.stats.healthMin / 2; i < HEART_POSITIONS.length; i++) {
             int[] pos = getBottomCenterCoord(HEART_POSITIONS[i][0], HEART_POSITIONS[i][1] + heartOffset);
 
@@ -94,8 +91,6 @@ public class VehicleHudRenderer {
                 ctx.drawTexture(RenderLayer::getGuiTextured, HEART_VEHICLE_UNAVAILABLE, pos[0], pos[1], 0, 0, 9 - heartOverlapFix, 9, 9, 9);
             }
         }
-
-        RenderSystem.disableBlend();
 
         if(displayTexts) {
             //render text
