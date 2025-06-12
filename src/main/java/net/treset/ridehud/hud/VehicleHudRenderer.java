@@ -1,14 +1,14 @@
 package net.treset.ridehud.hud;
 
-import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.font.TextRenderer;
+import net.minecraft.client.gl.RenderPipelines;
 import net.minecraft.client.gui.DrawContext;
-import net.minecraft.client.render.RenderLayer;
 import net.minecraft.client.resource.language.I18n;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
+import net.minecraft.util.math.ColorHelper;
 import net.treset.ridehud.RideChecker;
 import net.treset.ridehud.RideHudMod;
 import net.treset.ridehud.hud.vehicle_huds.*;
@@ -69,8 +69,6 @@ public class VehicleHudRenderer {
     }
 
     public static void drawHearts(DrawContext ctx) {
-        RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
-
         for(int i = hud.stats.healthHearts - hud.stats.healthMin / 2; i < HEART_POSITIONS.length; i++) {
             int[] pos = getBottomCenterCoord(HEART_POSITIONS[i][0], HEART_POSITIONS[i][1] + heartOffset);
 
@@ -80,15 +78,15 @@ public class VehicleHudRenderer {
             //render half hearts
             if (hud.stats.health % 2 != 0 && i == hud.stats.healthHearts - (hud.stats.healthMin / 2)) {
                 updateCurrentHealth();
-                ctx.drawTexture(RenderLayer::getGuiTextured, HEART_VEHICLE_UNAVAILABLE, pos[0], pos[1], 0, 0, 4, 9, 9, 9);
-                ctx.drawTexture(RenderLayer::getGuiTextured, HEART_CONTAINER, pos[0] + 4, pos[1], 4, 0, 5 - heartOverlapFix, 9, 9, 9);
+                ctx.drawTexture(RenderPipelines.GUI_TEXTURED, HEART_VEHICLE_UNAVAILABLE, pos[0], pos[1], 0, 0, 4, 9, 9, 9);
+                ctx.drawTexture(RenderPipelines.GUI_TEXTURED, HEART_CONTAINER, pos[0] + 4, pos[1], 4, 0, 5 - heartOverlapFix, 9, 9, 9);
                 if (hud.stats.healthCurrent == hud.stats.health) {
-                    ctx.drawTexture(RenderLayer::getGuiTextured, HEART_VEHICLE_FULL, pos[0] + 4, pos[1], 4, 0, 5 - heartOverlapFix, 9, 9, 9);
+                    ctx.drawTexture(RenderPipelines.GUI_TEXTURED, HEART_VEHICLE_FULL, pos[0] + 4, pos[1], 4, 0, 5 - heartOverlapFix, 9, 9, 9);
                 }
 
             } else {
                 //render unavailable hearts
-                ctx.drawTexture(RenderLayer::getGuiTextured, HEART_VEHICLE_UNAVAILABLE, pos[0], pos[1], 0, 0, 9 - heartOverlapFix, 9, 9, 9);
+                ctx.drawTexture(RenderPipelines.GUI_TEXTURED, HEART_VEHICLE_UNAVAILABLE, pos[0], pos[1], 0, 0, 9 - heartOverlapFix, 9, 9, 9);
             }
         }
 
@@ -100,7 +98,7 @@ public class VehicleHudRenderer {
             String str = assembleText(hud.stats.health, hud.stats.healthMax, "", hud.stats.healthScore);
             int textWidth = textRenderer.getWidth(str);
             int[] textPos = getBottomCenterCoord(50 - textWidth, 49 + heartOffset);
-            ctx.drawTextWithShadow(textRenderer, Text.of(str), textPos[0], textPos[1], 0xffffff);
+            ctx.drawTextWithShadow(textRenderer, Text.of(str), textPos[0], textPos[1], ColorHelper.fromAbgr(0xFFFFFFFF));
         }
     }
 
@@ -109,7 +107,7 @@ public class VehicleHudRenderer {
 
         int[] pos = getBottomCenterCoord(0, 55 + totalOffset);
 
-        ctx.drawTexture(RenderLayer::getGuiTextured, SPEED_ABILITY_BAR_BACKGROUND, pos[0], pos[1], 0, 0, 91, 5, 91, 5);
+        ctx.drawTexture(RenderPipelines.GUI_TEXTURED, SPEED_ABILITY_BAR_BACKGROUND, pos[0], pos[1], 0, 0, 91, 5, 91, 5);
 
         int overlayWidth;
         if(displayMode == 1) {
@@ -117,11 +115,11 @@ public class VehicleHudRenderer {
         } else {
             overlayWidth = Math.round(91f * hud.stats.speedScore / 100f);
         }
-        ctx.drawTexture(RenderLayer::getGuiTextured, SPEED_ABILITY_BAR_PROGRESS, pos[0], pos[1], 0, 0, overlayWidth, 5, 91, 5);
+        ctx.drawTexture(RenderPipelines.GUI_TEXTURED, SPEED_ABILITY_BAR_PROGRESS, pos[0], pos[1], 0, 0, overlayWidth, 5, 91, 5);
 
         //render icon
         int[] icoPos = getBottomCenterCoord(91, 64 + totalOffset);
-        ctx.drawTexture(RenderLayer::getGuiTextured, SPEED_ABILITY_ICON, icoPos[0], icoPos[1], 0, 0, 18, 18, 18, 18);
+        ctx.drawTexture(RenderPipelines.GUI_TEXTURED, SPEED_ABILITY_ICON, icoPos[0], icoPos[1], 0, 0, 18, 18, 18, 18);
 
         //render text
         if(displayTexts) {
@@ -131,7 +129,7 @@ public class VehicleHudRenderer {
             String str = assembleText(hud.stats.speed, hud.stats.speedMax , I18n.translate("ridehud.unit.blocks_per_second"), hud.stats.speedScore);
             int textWidth = textRenderer.getWidth(str);
             int[] textPos = getBottomCenterCoord(91 - textWidth, 64 + totalOffset);
-            ctx.drawTextWithShadow(textRenderer, Text.of(str), textPos[0], textPos[1], 0xffffff);
+            ctx.drawTextWithShadow(textRenderer, Text.of(str), textPos[0], textPos[1], ColorHelper.fromAbgr(0xFFFFFFFF));
         }
     }
 
@@ -140,7 +138,7 @@ public class VehicleHudRenderer {
 
         int[] pos = getBottomCenterCoord(-91, 55 + totalOffset);
 
-        ctx.drawTexture(RenderLayer::getGuiTextured, JUMP_ABILITY_BAR_BACKGROUND, pos[0], pos[1], 0, 0, 91, 5, 91, 5);
+        ctx.drawTexture(RenderPipelines.GUI_TEXTURED, JUMP_ABILITY_BAR_BACKGROUND, pos[0], pos[1], 0, 0, 91, 5, 91, 5);
 
         int overlayWidth;
         if(displayMode == 1) {
@@ -148,11 +146,11 @@ public class VehicleHudRenderer {
         } else {
             overlayWidth = Math.round(91f * hud.stats.jumpScore / 100f);
         }
-        ctx.drawTexture(RenderLayer::getGuiTextured, JUMP_ABILITY_BAR_PROGRESS, pos[0], pos[1], 0, 0, overlayWidth, 5, 91, 5);
+        ctx.drawTexture(RenderPipelines.GUI_TEXTURED, JUMP_ABILITY_BAR_PROGRESS, pos[0], pos[1], 0, 0, overlayWidth, 5, 91, 5);
 
         //render icon
         int[] icoPos = getBottomCenterCoord(-109, 64 + totalOffset);
-        ctx.drawTexture(RenderLayer::getGuiTextured, JUMP_ABILITY_ICON, icoPos[0], icoPos[1], 0, 0, 18, 18, 18, 18);
+        ctx.drawTexture(RenderPipelines.GUI_TEXTURED, JUMP_ABILITY_ICON, icoPos[0], icoPos[1], 0, 0, 18, 18, 18, 18);
 
         //render text
         if(displayTexts) {
@@ -161,7 +159,7 @@ public class VehicleHudRenderer {
 
             String str = assembleText(hud.stats.jumpHeight, hud.stats.jumpHeightMax, I18n.translate("ridehud.unit.blocks"), hud.stats.jumpScore);
             int[] textPos = getBottomCenterCoord(-91, 64 + totalOffset);
-            ctx.drawTextWithShadow(textRenderer, Text.of(str), textPos[0], textPos[1], 0xffffff);
+            ctx.drawTextWithShadow(textRenderer, Text.of(str), textPos[0], textPos[1], ColorHelper.fromAbgr(0xFFFFFFFF));
         }
     }
 
