@@ -5,7 +5,6 @@ import com.google.gson.JsonPrimitive;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.util.InputUtil;
 import net.treset.ridehud.RideHudClient;
-import net.treset.ridehud.hud.VehicleHudRenderer;
 import net.treset.vanillaconfig.config.*;
 import net.treset.vanillaconfig.config.managers.SaveLoadManager;
 import net.treset.vanillaconfig.config.version.ConfigVersion;
@@ -58,25 +57,9 @@ public class Config {
         barOffset.setFullWidth(false);
         heartOffset.setFullWidth(false);
 
-        displayMode.onChange(Config::onDisplayModeChanged);
-        displayText.onChange(Config::onDisplayTextChanged);
-        barOffset.onChange(Config::onBarOffsetChanged);
-        heartOffset.onChange(Config::onHeartOffsetChanged);
         openGui.onPressed(Config::onConfigHotkeyPressed);
     }
 
-    public static void onDisplayModeChanged(int prevInt, String prevOption, String key) {
-        VehicleHudRenderer.setDisplayMode(displayMode.getOptionIndex());
-    }
-    public static void onDisplayTextChanged(boolean prevBool, String key) {
-        VehicleHudRenderer.setDisplayTexts(displayText.getBoolean());
-    }
-    public static void onBarOffsetChanged(int prevOffset, String key) {
-        VehicleHudRenderer.setBarOffset(barOffset.getInteger());
-    }
-    public static void onHeartOffsetChanged(int prevOffset, String key) {
-        VehicleHudRenderer.setHeartOffset(heartOffset.getInteger());
-    }
     public static void onConfigHotkeyPressed(String key) {
         MinecraftClient.getInstance().setScreen(RideHudClient.configScreen);
     }

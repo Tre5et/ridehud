@@ -3,15 +3,10 @@ package net.treset.ridehud;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.network.ClientPlayerEntity;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.passive.DonkeyEntity;
-import net.minecraft.entity.passive.HorseEntity;
-import net.minecraft.entity.passive.LlamaEntity;
-import net.minecraft.entity.passive.MuleEntity;
-import net.treset.ridehud.hud.VehicleHudRenderer;
-import net.treset.ridehud.hud.vehicle_huds.DonkeyHud;
-import net.treset.ridehud.hud.vehicle_huds.HorseHud;
-import net.treset.ridehud.hud.vehicle_huds.LlamaHud;
-import net.treset.ridehud.hud.vehicle_huds.MuleHud;
+import net.minecraft.entity.passive.*;
+import net.treset.ridehud.entity_stats.VehicleStats;
+import net.treset.ridehud.entity_stats.instances.HorseStats;
+import net.treset.ridehud.entity_stats.instances.LlamaStats;
 import net.treset.vanillaconfig.tools.ClientTools;
 
 public class RideChecker {
@@ -22,7 +17,7 @@ public class RideChecker {
     public static boolean requestUpdate = false;
     public static boolean onApplicableVehicle = false;
 
-    public static void checkRideStatus() {
+    public static void checkRideStatus(boolean force) {
 
         if(cli == null && !ClientTools.isInGame()) {
             cli = MinecraftClient.getInstance();
@@ -35,43 +30,24 @@ public class RideChecker {
 
         Entity vehicle = player.getVehicle();
 
-        if(vehicle != prevVehicle) {
+        if(vehicle != prevVehicle || force) {
             prevVehicle = vehicle;
             if(vehicle == null) {
                 onApplicableVehicle = false;
-                if(VehicleHudRenderer.hud != null) VehicleHudRenderer.hud.setActive(false);
-
-            } else if(vehicle instanceof HorseEntity horse) {
-                onApplicableVehicle = true;
-                HorseHud hud = new HorseHud(horse);
-                hud.setActive(true);
-            } else if(vehicle instanceof DonkeyEntity donkey) {
-                onApplicableVehicle = true;
-                DonkeyHud hud = new DonkeyHud(donkey);
-                hud.setActive(true);
-            } else if(vehicle instanceof MuleEntity mule) {
-                onApplicableVehicle = true;
-                MuleHud hud = new MuleHud(mule);
-                hud.setActive(true);
+                VehicleStats.setInstance(null);
             } else if(vehicle instanceof LlamaEntity llama) {
                 onApplicableVehicle = true;
-                LlamaHud hud = new LlamaHud(llama);
-                hud.setActive(true);
-
+                VehicleStats.setInstance(new LlamaStats(llama));
+            } else if(vehicle instanceof AbstractHorseEntity horse) {
+                onApplicableVehicle = true;
+                VehicleStats.setInstance(new HorseStats(horse));
             } else {
                 onApplicableVehicle = false;
-                if(VehicleHudRenderer.hud != null) VehicleHudRenderer.hud.setActive(false);
+                VehicleStats.setInstance(null);
             }
         }
 
-        if(VehicleHudRenderer.hud == null) return;
-
-        if(requestUpdate) updateCurrentOptStats();
-    }
-
-    public static void updateCurrentOptStats() {
-        VehicleHudRenderer.hud.stats.updateCurrentSpeed();
-        VehicleHudRenderer.hud.stats.updateCurrentJumpHeight();
+        if(VehicleStats.hasInstance() && requestUpdate) VehicleStats.getInstance().updateCurrent();
     }
 
     public static boolean getUpdateReq() { return requestUpdate; }

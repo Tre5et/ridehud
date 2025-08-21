@@ -13,7 +13,6 @@ import java.util.function.BooleanSupplier;
 public class ClientWorldMixin {
     @Inject(method = "tick(Ljava/util/function/BooleanSupplier;)V", at = @At("TAIL"))
     public void tick(BooleanSupplier shouldKeepTicking, CallbackInfo info) {
-        RideChecker.checkRideStatus();
+        RideChecker.checkRideStatus(false);
     }
-
 }

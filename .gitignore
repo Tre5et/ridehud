@@ -29,5 +29,5 @@ bin/
 *.DS_Store
 
 # fabric
-
+lib/
 run/
