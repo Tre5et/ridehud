@@ -7,11 +7,12 @@ import net.treset.ridehud.entity_stats.VehicleStatsComponent;
 public interface VehicleStatsRenderer {
     void render(DrawContext ctx, VehicleStatsComponent stats);
 
-    static String assembleText(double value, double max, String unit, int score) {
+    static String assembleText(double value, double max, String unit, double score) {
         return String.format("%s/%s%s: %s%s",
                 (roundToDecimalPlace((float)value) % 1 == 0) ? String.format("%.0f", value) : roundToDecimalPlace((float)value),
                 (roundToDecimalPlace((float)max) % 1 == 0) ? String.format("%.0f", max) : roundToDecimalPlace((float)max),
-                unit, score, "%");
+                unit,
+                Math.round(score * 100d), "%");
     }
 
     static float roundToDecimalPlace(float value) {

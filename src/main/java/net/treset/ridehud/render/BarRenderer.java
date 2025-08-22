@@ -41,7 +41,7 @@ public abstract class BarRenderer implements VehicleStatsRenderer {
 
         ctx.drawTexture(RenderPipelines.GUI_TEXTURED, barBackground, pos[0], pos[1], 0, 0, 91, 5, 91, 5);
 
-        int overlayWidth = Math.round(91f * stats.getScore(Config.displayMode.getOptionIndex() == 1) / 100f);
+        int overlayWidth = (int)Math.round(91d * stats.getScore(Config.displayMode.getOptionIndex() == 1));
         ctx.drawTexture(RenderPipelines.GUI_TEXTURED, barProgress, pos[0], pos[1], 0, 0, overlayWidth, 5, 91, 5);
 
         //render icon

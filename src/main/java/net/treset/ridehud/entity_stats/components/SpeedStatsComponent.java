@@ -10,6 +10,7 @@ import java.util.Map;
 
 public class SpeedStatsComponent extends VehicleStatsComponent {
     private final LivingEntity entity;
+    private boolean prevGroundCollision = true;
 
     public SpeedStatsComponent(LivingEntity entity, double min, double max) {
         super(entity.getAttributeInstance(EntityAttributes.MOVEMENT_SPEED), min, max, new SpeedStatsRenderer());
@@ -28,6 +29,11 @@ public class SpeedStatsComponent extends VehicleStatsComponent {
 
     @Override
     public double getUpdatedCurrent() {
+        if(entity.groundCollision != prevGroundCollision) {
+            // Ignore first tick after starting and ending jump because speed values are funky
+            prevGroundCollision = entity.groundCollision;
+            return this.getCurrent();
+        }
         return (Math.sqrt(Math.pow(entity.getX() - entity.lastX, 2) + Math.pow(entity.getZ() - entity.lastZ, 2))) * 20D;
     }
 }

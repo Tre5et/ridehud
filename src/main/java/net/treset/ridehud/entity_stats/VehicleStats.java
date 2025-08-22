@@ -34,13 +34,13 @@ public class VehicleStats {
         }
     }
 
-    public int getTotalScore(boolean current) {
+    public double getTotalScore(boolean current) {
         int size = statComponents.size();
         if(size == 0) {
             return 0;
         }
-        int score = statComponents.values().stream().mapToInt(s -> s.getScore(current)).sum();
-        return (int)((double)score / size);
+        double score = statComponents.values().stream().mapToDouble(s -> s.getScore(current)).sum();
+        return score / size;
     }
 
     private static VehicleStats instance;

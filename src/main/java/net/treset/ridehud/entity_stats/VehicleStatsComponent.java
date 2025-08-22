@@ -1,5 +1,6 @@
 package net.treset.ridehud.entity_stats;
 
+import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.entity.attribute.EntityAttributeInstance;
 import net.treset.ridehud.render.VehicleStatsRenderer;
@@ -40,8 +41,8 @@ public abstract class VehicleStatsComponent {
         }
     }
 
-    public int getScore(boolean current) {
-        return (int)Math.round((getValue(current) - min) / (max - min) * 100);
+    public double getScore(boolean current) {
+        return Math.max(0, Math.min(1, (getValue(current) - min) / (max - min)));
     }
 
     public double getCurrent() {
