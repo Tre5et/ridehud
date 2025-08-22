@@ -39,14 +39,14 @@ public abstract class BarRenderer implements VehicleStatsRenderer {
 
         int[] pos = VehicleStatsRenderer.getBottomCenterCoord(xBarOffset, yBarOffset + totalOffset);
 
-        ctx.drawTexture(RenderPipelines.GUI_TEXTURED, barBackground, pos[0], pos[1], 0, 0, 91, 5, 91, 5);
+        ctx.drawGuiTexture(RenderPipelines.GUI_TEXTURED, barBackground, pos[0], pos[1], 91, 5);
 
         int overlayWidth = (int)Math.round(91d * stats.getScore(Config.displayMode.getOptionIndex() == 1));
-        ctx.drawTexture(RenderPipelines.GUI_TEXTURED, barProgress, pos[0], pos[1], 0, 0, overlayWidth, 5, 91, 5);
+        ctx.drawGuiTexture(RenderPipelines.GUI_TEXTURED, barProgress, 91, 5, 0, 0, pos[0], pos[1], overlayWidth, 5);
 
         //render icon
         int[] icoPos = VehicleStatsRenderer.getBottomCenterCoord(xIconOffset, yIconOffset + totalOffset);
-        ctx.drawTexture(RenderPipelines.GUI_TEXTURED, icon, icoPos[0], icoPos[1], 0, 0, 18, 18, 18, 18);
+        ctx.drawGuiTexture(RenderPipelines.GUI_TEXTURED, icon, icoPos[0], icoPos[1], 18, 18);
 
         //render text
         if(Config.displayText.getBoolean()) {

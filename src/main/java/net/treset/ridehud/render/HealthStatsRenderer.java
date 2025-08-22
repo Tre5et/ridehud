@@ -12,9 +12,9 @@ import net.treset.ridehud.config.Config;
 import net.treset.ridehud.entity_stats.VehicleStatsComponent;
 
 public class HealthStatsRenderer implements VehicleStatsRenderer {
-    private static final Identifier HEART_CONTAINER = Identifier.ofVanilla("textures/gui/sprites/hud/heart/container.png");
-    private static final Identifier HEART_VEHICLE_FULL = Identifier.ofVanilla("textures/gui/sprites/hud/heart/vehicle_full.png");
-    private static final Identifier HEART_VEHICLE_UNAVAILABLE = Identifier.of(RideHudMod.MOD_ID, "textures/gui/sprites/hud/heart/vehicle_unavailable.png");
+    private static final Identifier HEART_VEHICLE_CONTAINER = Identifier.ofVanilla("hud/heart/vehicle_container");
+    private static final Identifier HEART_VEHICLE_HALF = Identifier.ofVanilla("hud/heart/vehicle_half");
+    private static final Identifier HEART_VEHICLE_UNAVAILABLE = Identifier.of(RideHudMod.MOD_ID, "hud/heart/vehicle_unavailable");
     private static final int[][] HEART_POSITIONS = new int[][] {
             new int[] {26, 39},
             new int[] {18, 39},
@@ -39,16 +39,15 @@ public class HealthStatsRenderer implements VehicleStatsRenderer {
 
             //render half hearts
             if (maxHealth % 2 != 0 && i == maxHearts - (int)(stats.getMin() / 2)) {
-                stats.updateCurrent();
-                ctx.drawTexture(RenderPipelines.GUI_TEXTURED, HEART_VEHICLE_UNAVAILABLE, pos[0], pos[1], 0, 0, 4, 9, 9, 9);
-                ctx.drawTexture(RenderPipelines.GUI_TEXTURED, HEART_CONTAINER, pos[0] + 4, pos[1], 4, 0, 5 - heartOverlapFix, 9, 9, 9);
+                ctx.drawGuiTexture(RenderPipelines.GUI_TEXTURED, HEART_VEHICLE_UNAVAILABLE, 9, 9, 0, 0, pos[0], pos[1],4, 9);
+                ctx.drawGuiTexture(RenderPipelines.GUI_TEXTURED, HEART_VEHICLE_CONTAINER, 9, 9, 4, 0,pos[0] + 4, pos[1], 5 - heartOverlapFix, 9);
                 if (stats.getValue(true) == maxHealth) {
-                    ctx.drawTexture(RenderPipelines.GUI_TEXTURED, HEART_VEHICLE_FULL, pos[0] + 4, pos[1], 4, 0, 5 - heartOverlapFix, 9, 9, 9);
+                    ctx.drawGuiTexture(RenderPipelines.GUI_TEXTURED, HEART_VEHICLE_HALF, 9, 9, 4, 0, pos[0] + 4, pos[1], 5 - heartOverlapFix, 9);
                 }
 
             } else {
                 //render unavailable hearts
-                ctx.drawTexture(RenderPipelines.GUI_TEXTURED, HEART_VEHICLE_UNAVAILABLE, pos[0], pos[1], 0, 0, 9 - heartOverlapFix, 9, 9, 9);
+                ctx.drawGuiTexture(RenderPipelines.GUI_TEXTURED, HEART_VEHICLE_UNAVAILABLE, 9, 9, 0, 0, pos[0], pos[1], 9 - heartOverlapFix, 9);
             }
         }
 
