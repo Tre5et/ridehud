@@ -11,7 +11,6 @@ import net.treset.ridehud.entity_stats.instances.LlamaStats;
 public class RideChecker {
     private static Entity prevVehicle = null;
 
-    public static boolean requestUpdate = false;
     public static boolean onApplicableVehicle = false;
 
     public static void checkRideStatus(boolean force) {
@@ -46,8 +45,7 @@ public class RideChecker {
 
         if(VehicleStats.hasInstance()) {
             VehicleStats.getInstance().update();
+            VehicleHudRenderer.updatePlayerHealthOffset();
         }
     }
-
-    public static boolean getUpdateReq() { return requestUpdate; }
 }

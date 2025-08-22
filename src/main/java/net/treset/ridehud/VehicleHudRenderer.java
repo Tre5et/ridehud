@@ -4,7 +4,6 @@ import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.world.GameMode;
-import net.treset.ridehud.config.Config;
 import net.treset.ridehud.entity_stats.VehicleStats;
 
 public class VehicleHudRenderer {
@@ -12,15 +11,7 @@ public class VehicleHudRenderer {
 
     public static void render(DrawContext ctx) {
         if(!VehicleStats.hasInstance() || MinecraftClient.getInstance().options.hudHidden) return;
-        updatePlayerHealthOffset();
-
         VehicleStats.getInstance().render(ctx);
-
-        requestUpdates();
-    }
-
-    public static void requestUpdates() {
-        if(Config.displayMode.getOptionIndex() == 1 != RideChecker.getUpdateReq()) RideChecker.requestUpdate = Config.displayMode.getOptionIndex() == 1;
     }
 
     public static int getPlayerHealthOffset() {
