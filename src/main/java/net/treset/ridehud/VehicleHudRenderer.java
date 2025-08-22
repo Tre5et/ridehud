@@ -11,7 +11,7 @@ public class VehicleHudRenderer {
     private static int playerHealthOffset = 0;
 
     public static void render(DrawContext ctx) {
-        if(!VehicleStats.hasInstance()) return;
+        if(!VehicleStats.hasInstance() || MinecraftClient.getInstance().options.hudHidden) return;
         updatePlayerHealthOffset();
 
         VehicleStats.getInstance().render(ctx);

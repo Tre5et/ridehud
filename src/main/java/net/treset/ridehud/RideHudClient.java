@@ -5,7 +5,6 @@ import net.treset.ridehud.config.Config;
 import net.treset.vanillaconfig.screen.ConfigScreen;
 
 public class RideHudClient implements ClientModInitializer {
-
     public static ConfigScreen configScreen;
 
     @Override

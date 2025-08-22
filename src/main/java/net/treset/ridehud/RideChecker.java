@@ -7,26 +7,23 @@ import net.minecraft.entity.passive.*;
 import net.treset.ridehud.entity_stats.VehicleStats;
 import net.treset.ridehud.entity_stats.instances.HorseStats;
 import net.treset.ridehud.entity_stats.instances.LlamaStats;
-import net.treset.vanillaconfig.tools.ClientTools;
 
 public class RideChecker {
     private static Entity prevVehicle = null;
-
-    private static MinecraftClient cli;
 
     public static boolean requestUpdate = false;
     public static boolean onApplicableVehicle = false;
 
     public static void checkRideStatus(boolean force) {
-
-        if(cli == null && !ClientTools.isInGame()) {
-            cli = MinecraftClient.getInstance();
+        if(MinecraftClient.getInstance() == null) {
             return;
         }
 
         ClientPlayerEntity player = MinecraftClient.getInstance().player;
-
-        if(player == null) return;
+        if(player == null) {
+            VehicleStats.setInstance(null);
+            return;
+        }
 
         Entity vehicle = player.getVehicle();
 
