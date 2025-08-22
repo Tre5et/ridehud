@@ -44,7 +44,9 @@ public class RideChecker {
             }
         }
 
-        if(VehicleStats.hasInstance() && requestUpdate) VehicleStats.getInstance().updateCurrent();
+        if(VehicleStats.hasInstance()) {
+            VehicleStats.getInstance().update();
+        }
     }
 
     public static boolean getUpdateReq() { return requestUpdate; }

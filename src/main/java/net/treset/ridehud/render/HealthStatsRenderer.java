@@ -28,10 +28,10 @@ public class HealthStatsRenderer implements VehicleStatsRenderer {
 
     @Override
     public void render(DrawContext ctx, VehicleStatsComponent stats) {
-        stats.updateCurrent();
         int maxHealth = (int)stats.getValue(false);
         int maxHearts = maxHealth / 2;
         for(int i = maxHearts - (int)stats.getMin() / 2; i < HEART_POSITIONS.length; i++) {
+            if(i < 0) continue;
             int[] pos = VehicleStatsRenderer.getBottomCenterCoord(HEART_POSITIONS[i][0], HEART_POSITIONS[i][1] + Config.heartOffset.getInteger());
 
             int heartOverlapFix = 1;

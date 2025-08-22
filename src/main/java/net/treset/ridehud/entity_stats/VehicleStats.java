@@ -28,9 +28,9 @@ public class VehicleStats {
         return statComponents.get(vehicleStatsType);
     }
 
-    public void updateCurrent() {
-        for(Map.Entry<VehicleStatsType, VehicleStatsComponent> entry : statComponents.entrySet()) {
-            entry.getValue().updateCurrent();
+    public void update() {
+        for(VehicleStatsComponent statsComponent : this.statComponents.values()) {
+            statsComponent.update();
         }
     }
 

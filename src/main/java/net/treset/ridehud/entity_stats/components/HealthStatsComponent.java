@@ -30,4 +30,12 @@ public class HealthStatsComponent extends VehicleStatsComponent {
     protected double getUpdatedCurrent() {
         return entity.getHealth();
     }
+
+    @Override
+    public void update() {
+        updateGeneral();
+        if(getGeneral() % 2 == 1) {
+            updateCurrent();
+        }
+    }
 }

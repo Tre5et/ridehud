@@ -2,6 +2,7 @@ package net.treset.ridehud.entity_stats.components;
 
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.attribute.EntityAttributes;
+import net.treset.ridehud.config.Config;
 import net.treset.ridehud.entity_stats.VehicleStatsComponent;
 import net.treset.ridehud.entity_stats.VehicleStatsType;
 import net.treset.ridehud.render.SpeedStatsRenderer;
@@ -35,5 +36,17 @@ public class SpeedStatsComponent extends VehicleStatsComponent {
             return this.getCurrent();
         }
         return (Math.sqrt(Math.pow(entity.getX() - entity.lastX, 2) + Math.pow(entity.getZ() - entity.lastZ, 2))) * 20D;
+    }
+
+    @Override
+    public void update() {
+        if(Config.displayMode.getOptionIndex() == 0) {
+            updateGeneral();
+        } else {
+            updateCurrent();
+            if(Config.displayText.getBoolean()) {
+                updateGeneral();
+            }
+        }
     }
 }
