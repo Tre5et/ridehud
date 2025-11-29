@@ -7,6 +7,6 @@ import net.treset.ridehud.RideHudClient;
 public class ModMenuCompat implements ModMenuApi {
     @Override
     public ConfigScreenFactory<?> getModConfigScreenFactory() { //set config screen as modmenu options
-        return (screen) -> RideHudClient.configScreen;
+        return (screen) -> RideHudClient.getConfigScreen();
     }
 }

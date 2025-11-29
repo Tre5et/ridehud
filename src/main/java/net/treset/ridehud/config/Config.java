@@ -8,7 +8,6 @@ import net.treset.ridehud.RideHudClient;
 import net.treset.vanillaconfig.config.*;
 import net.treset.vanillaconfig.config.managers.SaveLoadManager;
 import net.treset.vanillaconfig.config.version.ConfigVersion;
-import net.treset.vanillaconfig.screen.ConfigScreen;
 import net.treset.vanillaconfig.tools.FileTools;
 import org.lwjgl.glfw.GLFW;
 
@@ -50,8 +49,6 @@ public class Config {
 
         SaveLoadManager.globalSaveConfig(mainPage);
 
-        RideHudClient.configScreen = new ConfigScreen(mainPage, MinecraftClient.getInstance().currentScreen);
-
         displayMode.setFullWidth(false);
         displayText.setFullWidth(false);
         barOffset.setFullWidth(false);
@@ -61,7 +58,7 @@ public class Config {
     }
 
     public static void onConfigHotkeyPressed(String key) {
-        MinecraftClient.getInstance().setScreen(RideHudClient.configScreen);
+        MinecraftClient.getInstance().setScreen(RideHudClient.getConfigScreen());
     }
 
     private static void migrateFromMalilib() {
