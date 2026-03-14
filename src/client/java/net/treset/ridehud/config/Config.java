@@ -1,0 +1,125 @@
+package net.treset.ridehud.config;
+
+import com.google.gson.JsonElement;
+import com.google.gson.JsonPrimitive;
+import com.mojang.blaze3d.platform.InputConstants;
+import net.minecraft.client.Minecraft;
+import net.treset.ridehud.RideHudClient;
+import net.treset.vanillaconfig.config.*;
+import net.treset.vanillaconfig.config.managers.SaveLoadManager;
+import net.treset.vanillaconfig.config.version.ConfigVersion;
+import net.treset.vanillaconfig.tools.FileTools;
+import org.lwjgl.glfw.GLFW;
+
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.InputStreamReader;
+import java.nio.charset.StandardCharsets;
+
+public class Config {
+
+    public static final PageConfig mainPage = new PageConfig("config.ridehud");
+
+    private static final String[] displayOpt = new String[] {"config.ridehud.display_mode.max", "config.ridehud.display_mode.current"};
+    public static final ListConfig displayMode = new ListConfig(displayOpt, 0, "config.ridehud.display_mode", new String[][]{new String[]{"config.ridehud.display_mode.comment.0", "config.ridehud.display_mode.comment.1", "config.ridehud.display_mode.comment.2"}});
+    public static final BooleanConfig displayText = new BooleanConfig(false, "config.ridehud.display_text", "config.ridehud.display_text.comment");
+    public static final IntegerConfig barOffset = new IntegerConfig(0, -1000, 10000, "config.ridehud.bar_offset", "config.ridehud.bar_offset.comment");
+    public static final IntegerConfig heartOffset = new IntegerConfig(0, -1000, 10000, "config.ridehud.heart_offset", "config.ridehud.heart_offset.comment");
+    public static final KeybindConfig openGui = new KeybindConfig(new int[]{35} /*H*/, 0, 5, "config.ridehud.open_gui");
+
+    public static void init() {
+        mainPage.addOption(displayMode);
+        mainPage.addOption(displayText);
+        mainPage.addOption(barOffset);
+        mainPage.addOption(heartOffset);
+        mainPage.addOption(openGui);
+
+        if(!mainPage.loadVersion())
+                if(!mainPage.loadVersionOf("ridehud"))
+                        mainPage.loadVersionOf("ridhud");
+
+        if(!mainPage.hasVersion()) migrateFromMalilib();
+        else if(mainPage.getVersion().matches(new ConfigVersion("1.0.0"))) mainPage.migrateFileFrom("ridehud/ridhud.json");
+
+        mainPage.setVersion(new ConfigVersion(1, 0,1));
+
+        mainPage.setSaveName("ridehud");
+        mainPage.setPath("ridehud");
+
+        SaveLoadManager.globalSaveConfig(mainPage);
+
+        displayMode.setFullWidth(false);
+        displayText.setFullWidth(false);
+        barOffset.setFullWidth(false);
+        heartOffset.setFullWidth(false);
+
+        openGui.onPressed(Config::onConfigHotkeyPressed);
+    }
+
+    public static void onConfigHotkeyPressed(String key) {
+        Minecraft.getInstance().setScreen(RideHudClient.getConfigScreen());
+    }
+
+    private static void migrateFromMalilib() {
+        mainPage.migrateFileFrom("ridehud/ridehud.json");
+
+        if(!FileTools.fileExists(mainPage.getFile(true))) return;
+
+        JsonElement oldConfig = FileTools.readJsonFile(mainPage.getFile(true));
+        if(oldConfig != null && oldConfig.isJsonObject()) {
+            JsonElement general = oldConfig.getAsJsonObject().get("config.ridehud.general");
+            if (general != null && general.isJsonObject()) {
+                JsonElement displayMode = general.getAsJsonObject().get("config.ridehud.general.display_mode");
+                if (displayMode != null && displayMode.isJsonPrimitive()) {
+                    String newDisplayMode = (displayMode.getAsJsonPrimitive().getAsString().equals("full")) ? "config.ridehud.general.display_mode.full" : "config.ridehud.general.display_mode.deop";
+                    general.getAsJsonObject().remove("config.ridehud.general.display_mode");
+                    general.getAsJsonObject().add("config.ridehud.general.display_mode", new JsonPrimitive(newDisplayMode));
+                    FileTools.writeJsonToFile(oldConfig.getAsJsonObject(), mainPage.getFile(true));
+                }
+            }
+        }
+
+        displayMode.migrateFrom("config.ridehud.general/config.ridehud.general.display_mode");
+        displayText.migrateFrom("config.ridehud.general/config.ridehud.general.display_text");
+        barOffset.migrateFrom("config.ridehud.general/config.ridehud.general.bar_offset");
+
+
+        File optionsFile = new File("./options.txt"); //migrate keybinding
+        if(optionsFile.exists() && optionsFile.isFile() && optionsFile.canRead()) {
+            StringBuilder content = new StringBuilder();
+            try (BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(optionsFile), StandardCharsets.UTF_8))) {
+                String line;
+                while ((line = br.readLine()) != null) {
+                    if(line.startsWith("key_key.ridehud.config_gui:")) {
+                        String keyName = null;
+                        try {
+                            keyName = line.substring(27);
+                        } catch (IndexOutOfBoundsException e) {
+                            return;
+                        }
+
+                        if(keyName.isEmpty()) return;
+                        InputConstants.Key key = null;
+                        try {
+                            key = InputConstants.getKey(keyName);
+                        } catch(IllegalArgumentException e) {
+                            return;
+                        }
+
+                        if(!GLFW.glfwInit()) return;
+
+                        int keyCode = key.getValue();
+                        int scanCode = GLFW.glfwGetKeyScancode(keyCode);
+
+                        openGui.setKeys(new int[] {scanCode});
+                    }
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+
+
+    }
+}
