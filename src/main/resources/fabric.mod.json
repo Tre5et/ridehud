@@ -30,14 +30,17 @@
     ]
   },
   "mixins": [
-    "ridehud.mixins.json"
+      {
+          "config": "ridehud.client.mixins.json",
+          "environment": "client"
+      }
   ],
 
   "depends": {
     "fabricloader": ">=0.14.20",
-    "fabric": "*",
-    "vanillaconfig": ">=1.2.13",
-    "minecraft": ["~1.21.6"],
+    "fabric-api": "*",
+    "vanillaconfig": "~1.2.16-",
+    "minecraft": ["~26.1-"],
     "java": ">=21"
   },
   "suggests": {
