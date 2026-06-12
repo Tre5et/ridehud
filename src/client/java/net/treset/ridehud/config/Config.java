@@ -58,7 +58,7 @@ public class Config {
     }
 
     public static void onConfigHotkeyPressed(String key) {
-        Minecraft.getInstance().setScreen(RideHudClient.getConfigScreen());
+        Minecraft.getInstance().setScreenAndShow(RideHudClient.getConfigScreen());
     }
 
     private static void migrateFromMalilib() {

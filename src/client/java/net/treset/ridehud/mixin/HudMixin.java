@@ -2,8 +2,8 @@ package net.treset.ridehud.mixin;
 
 import net.minecraft.client.DeltaTracker;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
+import net.minecraft.client.gui.Hud;
 import net.treset.ridehud.VehicleHudRenderer;
 import net.treset.ridehud.config.Config;
 import net.treset.ridehud.entity_stats.VehicleStats;
@@ -12,8 +12,8 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.*;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-@Mixin(Gui.class)
-public class GuiMixin {
+@Mixin(Hud.class)
+public class HudMixin {
     @Inject(method = "extractRenderState(Lnet/minecraft/client/gui/GuiGraphicsExtractor;Lnet/minecraft/client/DeltaTracker;)V", at = @At("HEAD"), cancellable = true)
     public void onRender(GuiGraphicsExtractor ctx, DeltaTracker deltaTracker, CallbackInfo info) {
         VehicleHudRenderer.render(ctx);

@@ -7,7 +7,7 @@ import net.treset.vanillaconfig.screen.ConfigScreen;
 
 public class RideHudClient implements ClientModInitializer {
     public static ConfigScreen getConfigScreen() {
-        return new ConfigScreen(Config.mainPage, Minecraft.getInstance().screen);
+        return new ConfigScreen(Config.mainPage, Minecraft.getInstance().gui.screen());
     }
 
     @Override
