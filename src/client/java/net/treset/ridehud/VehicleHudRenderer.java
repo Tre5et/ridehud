@@ -10,7 +10,7 @@ public class VehicleHudRenderer {
     private static int playerHealthOffset = 0;
 
     public static void render(GuiGraphicsExtractor ctx) {
-        if(!VehicleStats.hasInstance() || Minecraft.getInstance().options.hideGui) return;
+        if(!VehicleStats.hasInstance() || Minecraft.getInstance().gui.hud.isHidden()) return;
         VehicleStats.getInstance().render(ctx);
     }
 

@@ -7,7 +7,7 @@
   ],
   "client": [
     "ClientLevelMixin",
-    "GuiMixin"
+    "HudMixin"
   ],
   "injectors": {
     "defaultRequire": 1
