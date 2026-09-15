@@ -9,7 +9,6 @@ import net.treset.vanillaconfig.config.*;
 import net.treset.vanillaconfig.config.managers.SaveLoadManager;
 import net.treset.vanillaconfig.config.version.ConfigVersion;
 import net.treset.vanillaconfig.tools.FileTools;
-import org.lwjgl.glfw.GLFW;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -26,7 +25,7 @@ public class Config {
     public static final BooleanConfig displayText = new BooleanConfig(false, "config.ridehud.display_text", "config.ridehud.display_text.comment");
     public static final IntegerConfig barOffset = new IntegerConfig(0, -1000, 10000, "config.ridehud.bar_offset", "config.ridehud.bar_offset.comment");
     public static final IntegerConfig heartOffset = new IntegerConfig(0, -1000, 10000, "config.ridehud.heart_offset", "config.ridehud.heart_offset.comment");
-    public static final KeybindConfig openGui = new KeybindConfig(new int[]{35} /*H*/, 0, 5, "config.ridehud.open_gui");
+    public static final KeybindConfig openGui = new KeybindConfig(new int[]{InputConstants.KEY_H} /*H*/, 0, 5, "config.ridehud.open_gui");
 
     public static void init() {
         mainPage.addOption(displayMode);
@@ -107,12 +106,9 @@ public class Config {
                             return;
                         }
 
-                        if(!GLFW.glfwInit()) return;
-
                         int keyCode = key.getValue();
-                        int scanCode = GLFW.glfwGetKeyScancode(keyCode);
 
-                        openGui.setKeys(new int[] {scanCode});
+                        openGui.setKeys(new int[] {keyCode});
                     }
                 }
             } catch (Exception e) {
